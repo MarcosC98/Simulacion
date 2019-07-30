@@ -16,7 +16,7 @@ object Simulacion extends Runnable{
   val maxVelocidad = Json.datos.pametrosSimulacion.velocidad.maximo
   
   var t: Int =0
-  
+  //VAL a
   val listaVehiculos = ArrayBuffer[Vehiculo]()
   val listaVias = ArrayBuffer[Via]()
     
