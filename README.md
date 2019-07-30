@@ -1,3 +1,4 @@
-Integrantes:
-Marcos David Carrillo
-Ricardo Peñaloza Velásquez
+### Integrantes:
+* Marcos David Carrillo
+* Ricardo Peñaloza Velásquez
+*
