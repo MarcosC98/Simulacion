@@ -1,7 +1,7 @@
 package ejecucion
 import mapa.{Interseccion, Via}
 import scalax.collection.mutable.Graph
-import scalax.collection.edge.{WLDiEdge, WLUnDiEdge}
+import scalax.collection.edge.WLUnDiEdge
 
 import scala.collection.mutable.ArrayBuffer
 
