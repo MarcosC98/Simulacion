@@ -1,22 +1,25 @@
 package ejecucion
 import mapa.Via
+import scala.collection.mutable.ArrayBuffer
 //Singleton Object para que solo haya una instancia
 import movimiento.Vehiculo
 import scala.util
 object Simulacion extends Runnable{
   
   val aleatorio = scala.util.Random
-  var dt:Double =_
-  var tRefresh:Double = _
-  var minVehiculos:Int = _
-  var maxVehiculos:Int = _
-  var minVelocidad:Int =_
-  var maxVelocidad:Int =_
-  var t: Int =0
-  val sizeListaVehiculos = minVehiculos + aleatorio.nextInt(maxVehiculos-minVehiculos)
-  val listaVehiculos:Array[Vehiculo] =  new Array[Vehiculo](sizeListaVehiculos)
-  val listaVias:Array[Via] = new Array[Via](0)
   
+  val dt = Json.datos.pametrosSimulacion.dt
+  val tRefresh = Json.datos.pametrosSimulacion.tRefresh
+  val minVehiculos = Json.datos.pametrosSimulacion.vehiculos.minimo
+  val maxVehiculos = Json.datos.pametrosSimulacion.vehiculos.maximo
+  val minVelocidad = Json.datos.pametrosSimulacion.velocidad.minimo
+  val maxVelocidad = Json.datos.pametrosSimulacion.velocidad.maximo
+  
+  var t: Int =0
+  
+  val listaVehiculos = ArrayBuffer[Vehiculo]()
+  val listaVias = ArrayBuffer[Via]()
+    
  def run() {
  /*while (true) {
  listadevehiculosOSimilar.foreach(_.mover(dt))
