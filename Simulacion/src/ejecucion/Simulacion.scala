@@ -2,6 +2,10 @@ package ejecucion
 import mapa.Via
 import movimiento.Velocidad
 import vehiculos.Carro
+import vehiculos.Moto
+import vehiculos.Camion
+import vehiculos.Bus
+import vehiculos.MotoTaxi
 import mapa.Interseccion
 import mapa.Via
 import mapa.TipoVia
@@ -21,10 +25,16 @@ object Simulacion extends Runnable{
   val maxVehiculos = Json.datos.pametrosSimulacion.vehiculos.maximo
   val minVelocidad = Json.datos.pametrosSimulacion.velocidad.minimo
   val maxVelocidad = Json.datos.pametrosSimulacion.velocidad.maximo
+  val numeroVehiculos = minVehiculos + aleatorio.nextInt(maxVehiculos - minVehiculos)
+  val buses = scala.math.round(Json.datos.pametrosSimulacion.proporciones.buses * numeroVehiculos)
+  val carros = scala.math.round(Json.datos.pametrosSimulacion.proporciones.carros * numeroVehiculos)
+  val motos = scala.math.round(Json.datos.pametrosSimulacion.proporciones.motos * numeroVehiculos)
+  val mototaxis = scala.math.round(Json.datos.pametrosSimulacion.proporciones.motoTaxis * numeroVehiculos)
+  val camiones = scala.math.round(Json.datos.pametrosSimulacion.proporciones.camiones * numeroVehiculos)
   
   var t: Int =0
   
-  val numeroVehiculos = minVehiculos + aleatorio.nextInt(maxVehiculos - minVehiculos)
+
   val listaIntersecciones = ArrayBuffer[Interseccion]()
   val listaVias = ArrayBuffer[Via]()
   val listaVehiculos = ArrayBuffer[Vehiculo]()
@@ -41,8 +51,49 @@ object Simulacion extends Runnable{
 }
   
 def generarVehiculosAleatorios{
-  for (i<-1 to numeroVehiculos){
-    Vehiculo.vehiculoAleatorio
+  //contadores para proporciones:
+  var b = 0
+  var c = 0
+  var m = 0
+  var mt = 0
+  var ca = 0
+while(b<buses || c<carros || m<motos || mt<mototaxis || ca<camiones){
+    val v = Vehiculo.vehiculoAleatorio
+    
+    if (v.isInstanceOf[Carro]){
+      c = c + 1
+      if(c > carros){
+        listaVehiculos.remove(listaVehiculos.length-1)
+      }
+    }
+    
+    if (v.isInstanceOf[Bus]){
+      b = b + 1
+      if ( b > buses){
+        listaVehiculos.remove(listaVehiculos.length-1)
+      }
+    }
+    
+    if (v.isInstanceOf[Moto]){
+      m = m + 1
+      if ( m > motos){
+        listaVehiculos.remove(listaVehiculos.length-1)
+      }
+    }
+    
+    if (v.isInstanceOf[Camion]){
+      ca = ca + 1
+      if ( ca > camiones){
+        listaVehiculos.remove(listaVehiculos.length-1)
+      }
+    }
+    
+    if (v.isInstanceOf[MotoTaxi]){
+      mt = mt + 1
+      if ( mt > mototaxis){
+        listaVehiculos.remove(listaVehiculos.length-1)
+      }
+    }
   }
 }
   
