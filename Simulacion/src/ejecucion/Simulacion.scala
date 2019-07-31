@@ -24,6 +24,7 @@ object Simulacion extends Runnable{
   
   var t: Int =0
   
+  val numeroVehiculos = minVehiculos + aleatorio.nextInt(maxVehiculos - minVehiculos)
   val listaIntersecciones = ArrayBuffer[Interseccion]()
   val listaVias = ArrayBuffer[Via]()
   val listaVehiculos = ArrayBuffer[Vehiculo]()
@@ -39,7 +40,11 @@ object Simulacion extends Runnable{
  
 }
   
-  
+def generarVehiculosAleatorios{
+  for (i<-1 to numeroVehiculos){
+    Vehiculo.vehiculoAleatorio
+  }
+}
   
   
 
@@ -164,7 +169,5 @@ object Simulacion extends Runnable{
       new Via(viva, pqEnv, 60, TipoVia("Calle"), Sentido.dobleVia, "37S", "37S"),
       new Via(viva, gu_37S, 60, TipoVia("Calle"), Sentido.dobleVia, "63", "37S"))
       println("Se han cargado las vias")
-      new Carro("abc123",listaIntersecciones(aleatorio.nextInt(listaIntersecciones.length)),new Velocidad(80)(new Angulo(60)))
-      println("Se ha creado el carro prueba")
   }
 }

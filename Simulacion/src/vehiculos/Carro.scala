@@ -4,18 +4,12 @@ import ejecucion.Simulacion
 import plano.Punto
 import movimiento.Velocidad
 import scala.util.Random
-class Carro (placaC:String,origen:Interseccion,velocidad:Velocidad) extends Vehiculo(placaC)(origen,velocidad){
-  Simulacion.listaVehiculos.append(this)
-  val aleatorio = scala.util.Random
-  val tamanioInter = Simulacion.listaIntersecciones.size
-  var c:Boolean = true
-  var interF = Simulacion.listaIntersecciones(aleatorio.nextInt(tamanioInter))
+class Carro (var placaC:String,origen:Interseccion,velocidad:Velocidad) extends Vehiculo(placaC)(origen,velocidad){
   
-  while(c){
-    if(origen == interF){
-      interF = Simulacion.listaIntersecciones(aleatorio.nextInt(tamanioInter))
-    } else{
-      c = false
-    }
-  }
+  
+  val aleatorioC = scala.util.Random
+  
+  for (i <- 1 to 3) {placaC = placaC + (aleatorio.nextInt(25) + 65).toChar}
+  for (d <- 1 to 3) {placaC = placaC + (aleatorio.nextInt(10)).toString()}  
+  this.placa =placaC
 }
