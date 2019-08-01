@@ -7,6 +7,7 @@ import movimiento.Velocidad
 import scala.util.Random
 import ejecucion.Simulacion
 import plano.Angulo
+import ejecucion.GrafoVia
 
 abstract case class Vehiculo(var placa:String)(val posi:Interseccion,val vel:Velocidad)
 extends Movil(posi,vel) with MovimientoUniforme {
@@ -17,7 +18,7 @@ extends Movil(posi,vel) with MovimientoUniforme {
   
   var c:Boolean = true
   var interF:Interseccion = Simulacion.listaIntersecciones(aleatorio.nextInt(tamanioInter))
-  
+
   while(c){
     if(posi == interF){
       interF = Simulacion.listaIntersecciones(aleatorio.nextInt(tamanioInter))
@@ -25,6 +26,7 @@ extends Movil(posi,vel) with MovimientoUniforme {
       c = false
     }
   }
+
 Simulacion.listaVehiculos.append(this)  
 }
 
@@ -36,7 +38,8 @@ object Vehiculo{
       val interseccionAleatoria = Simulacion.listaIntersecciones(aleatorio.nextInt(Simulacion.listaIntersecciones.length))
       val magAleatoria = Simulacion.minVelocidad + aleatorio.nextInt(Simulacion.maxVelocidad - Simulacion.minVelocidad)
       val anguloAleatorio = aleatorio.nextInt(360)
-
+      val pila = GrafoVia.Dijkstra(vehiculoAleatorio.posi, vehiculoAleatorio.interF)
+      
       if (numeroAleatorio == 0){
         val instancia = new Carro("",interseccionAleatoria,new Velocidad(magAleatoria)(new Angulo(anguloAleatorio)))
         instancia
@@ -56,15 +59,3 @@ object Vehiculo{
       }
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-

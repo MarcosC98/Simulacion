@@ -13,4 +13,5 @@ object Main extends App {
   println(Simulacion.numeroVehiculos)
   Simulacion.listaVehiculos.foreach(Vehiculo  => println("I: " + Vehiculo.posi + " F: " + Vehiculo.interF +" P: " + Vehiculo.placa +" V: " + Vehiculo.vel.magnitud))
   print(Simulacion.listaVehiculos.size)
+  //print(Simulacion.listaVehiculos.foreach(Vehiculo. => println(vehiculoAleatorio.pila)))
 }
