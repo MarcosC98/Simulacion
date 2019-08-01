@@ -8,6 +8,8 @@ import scala.util.Random
 import ejecucion.Simulacion
 import plano.Angulo
 import ejecucion.GrafoVia
+import mapa.Via
+import scala.collection.mutable.Queue
 
 abstract case class Vehiculo(var placa:String)(val posi:Interseccion,val vel:Velocidad)
 extends Movil(posi,vel) with MovimientoUniforme {
@@ -32,14 +34,15 @@ Simulacion.listaVehiculos.append(this)
 
 object Vehiculo{
   def vehiculoAleatorio:Vehiculo ={
-      
       val aleatorio = scala.util.Random
       val numeroAleatorio = aleatorio.nextInt(5)
       val interseccionAleatoria = Simulacion.listaIntersecciones(aleatorio.nextInt(Simulacion.listaIntersecciones.length))
       val magAleatoria = Simulacion.minVelocidad + aleatorio.nextInt(Simulacion.maxVelocidad - Simulacion.minVelocidad)
       val anguloAleatorio = aleatorio.nextInt(360)
-      val pila = GrafoVia.Dijkstra(vehiculoAleatorio.posi, vehiculoAleatorio.interF)
+      val lista = (GrafoVia.Dijkstra(vehiculoAleatorio.posi, vehiculoAleatorio.interF)).get.edges.toList.map(_.toOuter.label.asInstanceOf[Via])
+      val pila = Queue(lista: _*)
       
+     val viaActual = pila.dequeue()
       if (numeroAleatorio == 0){
         val instancia = new Carro("",interseccionAleatoria,new Velocidad(magAleatoria)(new Angulo(anguloAleatorio)))
         instancia
