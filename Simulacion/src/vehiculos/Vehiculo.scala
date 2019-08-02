@@ -1,7 +1,9 @@
 package vehiculos
 import plano.Punto
 import mapa.Interseccion
-import movimiento._
+import movimiento.Movil
+import movimiento.MovimientoUniforme
+import movimiento.Velocidad
 import scala.util.Random
 import ejecucion.Simulacion
 import plano.Angulo
@@ -26,11 +28,15 @@ extends Movil(posi,vel) with MovimientoUniforme {
       c = false
     }
   }
-  val recorrido = (GrafoVia.grafo.get(posi)).shortestPathTo(GrafoVia.grafo.get(interF)).get.edges.toList.map(_.toOuter.label.asInstanceOf[Via])
+  
+  val nodoi = GrafoVia.grafo.get(posi)
+  val nodof = GrafoVia.grafo.get(interF)
+  val recorrido = nodoi.shortestPathTo(nodof).get.edges.toList.map(_.toOuter.label.asInstanceOf[Via])
+
 Simulacion.listaVehiculos.append(this)  
 
 def mover(dt:Double){
-    
+
   }
 }
 
