@@ -32,12 +32,65 @@ extends Movil(posi,vel) with MovimientoUniforme {
   val nodoi = GrafoVia.grafo.get(posi)
   val nodof = GrafoVia.grafo.get(interF)
   val recorrido = nodoi.shortestPathTo(nodof).get.edges.toList.map(_.toOuter.label.asInstanceOf[Via])
-
+  val pila = Queue(recorrido: _*)
+  this.velc = Velocidad.kilometroHorMetroSeg(vel.magnitud)
+  val velx = math.abs(math.cos(vel.direccion.grados) * velc)
+  val vely = math.abs(math.sin(vel.direccion.grados) * velc)
+  def velA(anguloEnGrados:Double):Double ={
+    math.abs(velx / math.cos(anguloEnGrados))
+  }
 Simulacion.listaVehiculos.append(this)  
 
 def mover(dt:Double){
-
+    if(pila.isEmpty){
+      //nada
+    }else{
+    var anguloVia:Double = 0
+    val q = pila.dequeue()
+    println(q.origen.nombre +"-" + q.fin.nombre)
+    println(q.origen + "//" + posi)
+    if(q.origen != posi && q.fin.x == q.origen.x){
+      println("ENTRÓ")
+    anguloVia = Simulacion.calcularTanInv(q.fin.x, q.origen.x, q.fin.y, q.origen.y)
+    println("R1:" + anguloVia)
+    }else{
+    anguloVia = Simulacion.calcularTanInv(q.origen.x, q.fin.x, q.origen.y, q.fin.y)
+    println("R2:" + anguloVia)
+    }
+    println(anguloVia)
+    
+    if(anguloVia == 0 || anguloVia == 180 || anguloVia == 360){
+      
+      println("movimiento en x")
+   
+      println("A: " + posi)
+      if(anguloVia == 180){
+        val posa = (posi.x - velx*dt).toInt
+        posi.x_(posa)
+      }else{
+      val posa = (posi.x + velx*dt).toInt
+      posi.x_(posa)
+      }
+      println("D: " + posi)
+      
+    }else if(anguloVia == 90 || anguloVia == 270){
+      
+      println("movimiento en y")
+      
+      println("A: " + posi)
+      if(anguloVia == 270){
+      val posa = (posi.y - vely*dt).toInt
+      posi.y_(posa)
+      }else{
+      val posa = (posi.y + vely*dt).toInt
+      posi.y_(posa)
+      }
+      println("D: " + posi)
+    }else{
+      println("movimiento en angulo")
+    }
   }
+}
 }
 
 object Vehiculo{

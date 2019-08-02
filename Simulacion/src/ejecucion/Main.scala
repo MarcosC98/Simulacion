@@ -12,4 +12,5 @@ object Main extends App {
   Grafico.graficarVias(Simulacion.listaVias,Simulacion.listaIntersecciones)
   GrafoVia.construir(Simulacion.listaVias)
   Simulacion.generarVehiculosAleatorios
+  Simulacion.run
 }

@@ -1,6 +1,8 @@
 package movimiento
 trait MovimientoUniforme extends Movil {
-  def aumentarPosicion(dt:Double) = {
-    
+  var velc:Double = _
+  def aumentarPosicion(inicio:Int,velo:Double,dt:Double):Double = {
+    val fin = inicio + velo*dt
+    fin
   }  
 }

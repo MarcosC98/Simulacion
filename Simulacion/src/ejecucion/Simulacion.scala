@@ -41,14 +41,17 @@ object Simulacion extends Runnable{
     
   
  def run() {   
- while (true) {
- listaVehiculos.foreach(_.mover(dt))
- t += dt
+ //while (true) {
+ val va = listaVehiculos(aleatorio.nextInt(numeroVehiculos))
+ println("de " + va.posi.nombre + " a " + va.interF.nombre + va.interF)
+ va.mover(dt)
+ //t += dt
  //Grafico.graficarVehiculos(listadevehiculosOSimilar)
- Thread.sleep(tRefresh)
+ //Thread.sleep(tRefresh)
+ //
  }
  
-}
+
   
 def generarVehiculosAleatorios{
   //contadores para proporciones:
