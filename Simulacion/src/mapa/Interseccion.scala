@@ -1,7 +1,8 @@
 package mapa
 import plano.Punto
 import ejecucion.Simulacion
-case class Interseccion(cx:Int, cy:Int, _nombre:String ="") extends Punto(cx,cy) {
-  Simulacion.listaIntersecciones.append(this)
+class Interseccion(cx:Int, cy:Int, _nombre:String ="") extends Punto(cx,cy) {
+
   def nombre  = _nombre
+  Simulacion.listaIntersecciones.append(this)
 }
