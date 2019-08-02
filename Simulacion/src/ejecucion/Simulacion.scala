@@ -95,6 +95,12 @@ while(b<buses || c<carros || m<motos || mt<mototaxis || ca<camiones){
       }
     }
   }
+  if(listaVehiculos.size > numeroVehiculos){
+    listaVehiculos.remove(listaVehiculos.size-1)
+  }
+  if(listaVehiculos.size < numeroVehiculos){
+    Vehiculo.vehiculoAleatorio
+  }
 }
   
   

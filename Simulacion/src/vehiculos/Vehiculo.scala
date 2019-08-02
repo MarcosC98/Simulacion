@@ -28,6 +28,10 @@ extends Movil(posi,vel) with MovimientoUniforme {
       c = false
     }
   }
+  
+  //val nodoi = GrafoVia.grafo.get(posi)
+  //val nodof = GrafoVia.grafo.get(interF)
+  //val recorrido = nodoi.shortestPathTo(nodof).get.edges.toList.map(_.toOuter.label.asInstanceOf[Via])
 
 Simulacion.listaVehiculos.append(this)  
 }
@@ -39,10 +43,8 @@ object Vehiculo{
       val interseccionAleatoria = Simulacion.listaIntersecciones(aleatorio.nextInt(Simulacion.listaIntersecciones.length))
       val magAleatoria = Simulacion.minVelocidad + aleatorio.nextInt(Simulacion.maxVelocidad - Simulacion.minVelocidad)
       val anguloAleatorio = aleatorio.nextInt(360)
-      val lista = (GrafoVia.Dijkstra(vehiculoAleatorio.posi, vehiculoAleatorio.interF)).get.edges.toList.map(_.toOuter.label.asInstanceOf[Via])
-      val pila = Queue(lista: _*)
+
       
-     val viaActual = pila.dequeue()
       if (numeroAleatorio == 0){
         val instancia = new Carro("",interseccionAleatoria,new Velocidad(magAleatoria)(new Angulo(anguloAleatorio)))
         instancia

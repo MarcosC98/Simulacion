@@ -7,11 +7,10 @@ import scala.util.Random
 object Main extends App {
   Json.cargarDatosJson
   Simulacion.cargarDatosIniciales
+  GrafoVia.construir(Simulacion.listaVias)
   Simulacion.generarVehiculosAleatorios
-  
-  println(Simulacion.buses,Simulacion.carros,Simulacion.motos,Simulacion.camiones,Simulacion.mototaxis)
-  println(Simulacion.numeroVehiculos)
-  Simulacion.listaVehiculos.foreach(Vehiculo  => println("I: " + Vehiculo.posi + " F: " + Vehiculo.interF +" P: " + Vehiculo.placa +" V: " + Vehiculo.vel.magnitud))
-  print(Simulacion.listaVehiculos.size)
-  //print(Simulacion.listaVehiculos.foreach(Vehiculo. => println(vehiculoAleatorio.pila)))
+  val a = GrafoVia.grafo.get(Simulacion.listaIntersecciones(Simulacion.aleatorio.nextInt(Simulacion.listaIntersecciones.size)))
+  val b = GrafoVia.grafo.get(Simulacion.listaIntersecciones(Simulacion.aleatorio.nextInt(Simulacion.listaIntersecciones.size)))
+  val c = a.shortestPathTo(b).get.edges.toList.map(_.toOuter.label.asInstanceOf[Via])
+  print(c)
 }
