@@ -40,15 +40,15 @@ object Grafico {
   def graficarVias(vias:ArrayBuffer[Via], intersecciones:ArrayBuffer[Interseccion]) ={
     var numAux:Int=0
     vias.foreach({x  => val via = new XYSeries(numAux)
-      via.add(x.origen.cx,x.origen.cy)
-      via.add(x.fin.cx, x.fin.cy)
+      via.add(x.origen.x,x.origen.y)
+      via.add(x.fin.x, x.fin.y)
       dataset.addSeries(via)
       render.setSeriesShapesVisible(numAux, false)
       render.setSeriesPaint(numAux,Color.lightGray)
       numAux += 1
     })
     intersecciones.foreach({
-      x => val interseccion = new XYTextAnnotation(x.nombre,x.cx,x.cy+0.1)
+      x => val interseccion = new XYTextAnnotation(x.nombre,x.x,x.y+0.1)
         plantilla.addAnnotation(interseccion)
     })
   }

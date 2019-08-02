@@ -42,7 +42,7 @@ object Simulacion extends Runnable{
   
  def run() {   
  while (true) {
- //listaVehiculos.foreach(_.mover(dt))
+ listaVehiculos.foreach(_.mover(dt))
  t += dt
  //Grafico.graficarVehiculos(listadevehiculosOSimilar)
  Thread.sleep(tRefresh)
