@@ -40,8 +40,8 @@ object Grafico {
   def graficarVias(vias:ArrayBuffer[Via], intersecciones:ArrayBuffer[Interseccion]) ={
     var numAux:Int=0
     vias.foreach({x  => val via = new XYSeries(numAux)
-      via.add(x.origen.cx,x.fin.cy)
-      via.add(x.fin.cx, x.origen.cy)
+      via.add(x.origen.cx,x.origen.cy)
+      via.add(x.fin.cx, x.fin.cy)
       dataset.addSeries(via)
       render.setSeriesShapesVisible(numAux, false)
       render.setSeriesPaint(numAux,Color.lightGray)
