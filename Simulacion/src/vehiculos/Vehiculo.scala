@@ -27,8 +27,11 @@ extends Movil(posi,vel) with MovimientoUniforme {
     }
   }
   val recorrido = (GrafoVia.grafo.get(posi)).shortestPathTo(GrafoVia.grafo.get(interF)).get.edges.toList.map(_.toOuter.label.asInstanceOf[Via])
-
 Simulacion.listaVehiculos.append(this)  
+
+def mover(dt:Double){
+    
+  }
 }
 
 object Vehiculo{

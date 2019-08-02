@@ -42,7 +42,7 @@ object Simulacion extends Runnable{
   
  def run() {   
  while (true) {
- listaVehiculos.foreach(_.aumentarPosicion(dt))
+ //listaVehiculos.foreach(_.mover(dt))
  t += dt
  //Grafico.graficarVehiculos(listadevehiculosOSimilar)
  Thread.sleep(tRefresh)
@@ -102,12 +102,6 @@ while(b<buses || c<carros || m<motos || mt<mototaxis || ca<camiones){
     Vehiculo.vehiculoAleatorio
   }
 }
-  
-  
-
-
-  
-  
   
   def cargarDatosIniciales {
     val niquia = new Interseccion(300, 12000, "Niquia")
@@ -227,4 +221,40 @@ while(b<buses || c<carros || m<motos || mt<mototaxis || ca<camiones){
       new Via(viva, gu_37S, 60, TipoVia("Calle"), Sentido.dobleVia, "63", "37S"))
       println("Se han cargado las vias")
   }
+
+def calcularTanInv(x1:Double,x2:Double,y1:Double,y2:Double):Double ={
+  val difx = x2 - x1
+  val dify = y2 - y1
+  
+  if (difx == 0){
+    if(dify > 0){
+      return 90
+    }else{
+      return 270
+    }
+  }else if(dify == 0){
+    if(difx > 0){
+      return 0
+    }else{
+      return 180
+    }
+  }else{
+    val m = dify/difx
+    val a = scala.math.atan(m).toDegrees.round
+    if(difx > 0 && dify > 0){
+      //primer cuadrante
+      return a
+    }else if(difx < 0 && dify >0){
+      //segundo cuadrante
+      return a +90
+    }else if(difx < 0 && dify <0){
+      //tercer cuadrante
+      return a + 180
+    }else{
+      //cuarto cuadrante
+      return a + 270
+    }
+  }
 }
+}
+
