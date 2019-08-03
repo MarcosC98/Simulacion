@@ -1,19 +1,23 @@
 package vehiculos
+import java.awt.Shape
+
 import plano.Punto
 import mapa.Interseccion
 import movimiento.Movil
 import movimiento.MovimientoUniforme
 import movimiento.Velocidad
+
 import scala.util.Random
 import ejecucion.Simulacion
 import plano.Angulo
 import ejecucion.GrafoVia
 import mapa.Via
+
 import scala.collection.mutable.Queue
 
 abstract case class Vehiculo(var placa:String)(val interInicial:Interseccion,val vel:Velocidad)
 extends Movil(interInicial,vel) with MovimientoUniforme {
-  
+  val figura: Shape
   val aleatorio = scala.util.Random
   
   val tamanioInter = Simulacion.listaIntersecciones.size
@@ -50,14 +54,12 @@ def mover(dt:Double){
         proximaInter = viaActual.origen
       }
       velocidad.direccion = new Angulo(angulo)
-      println(posicion)
       aumentarPosicion(dt)
-      println(posicion)
       val hipotenusa = math.abs(math.sqrt(math.pow((posicion.x - proximaInter.x ),2) +math.pow((posicion.y - proximaInter.y ), 2)))
       if(hipotenusa <= velocidad.magnitud *dt){
-        println("Se llego a interseccion!")
+
         posicion_(proximaInter.asInstanceOf[Punto])
-        println(proximaInter.nombre)
+
         if(!pila.isEmpty){
           viaActual = pila.dequeue()
         }

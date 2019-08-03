@@ -1,8 +1,12 @@
 package vehiculos
+import java.awt.Shape
+
 import mapa.Interseccion
 import ejecucion.Simulacion
 import plano.Punto
 import movimiento.Velocidad
+import org.jfree.util.ShapeUtilities
+
 import scala.util.Random
 class MotoTaxi (var placaMT:String,origen:Interseccion,velocidad:Velocidad) extends Vehiculo(placaMT)(origen,velocidad){
   
@@ -13,4 +17,5 @@ class MotoTaxi (var placaMT:String,origen:Interseccion,velocidad:Velocidad) exte
   
   placaMT = placaGenerada
   this.placa = placaMT
+  override val figura: Shape = ShapeUtilities.createUpTriangle(4)
 }

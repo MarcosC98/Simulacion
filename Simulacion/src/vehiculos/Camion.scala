@@ -1,8 +1,12 @@
 package vehiculos
+import java.awt.Shape
+
 import mapa.Interseccion
 import ejecucion.Simulacion
 import plano.Punto
 import movimiento.Velocidad
+import org.jfree.util.ShapeUtilities
+
 import scala.util.Random
 class Camion (var placaCM:String,origen:Interseccion,velocidad:Velocidad) extends Vehiculo(placaCM)(origen,velocidad){
     
@@ -12,4 +16,5 @@ class Camion (var placaCM:String,origen:Interseccion,velocidad:Velocidad) extend
   
   placaCM = placaGenerada
   this.placa = placaCM
+  override val figura: Shape = ShapeUtilities.createDownTriangle(4)
 }
