@@ -41,15 +41,16 @@ object Simulacion extends Runnable{
     
   
  def run() {   
- //while (true) {
  val va = listaVehiculos(aleatorio.nextInt(numeroVehiculos))
- println("de " + va.posi.nombre + " a " + va.interF.nombre + va.interF)
- va.mover(dt)
+ println("de " + va.interInicial.nombre + " a " + va.interF.nombre)
+ while (true) {
+   va.mover(dt)
  //t += dt
  //Grafico.graficarVehiculos(listadevehiculosOSimilar)
  //Thread.sleep(tRefresh)
  //
  }
+  }
  
 
   
