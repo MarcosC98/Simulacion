@@ -43,12 +43,14 @@ object Simulacion extends Runnable{
  def run() {   
  val va = listaVehiculos(aleatorio.nextInt(numeroVehiculos))
  println("de " + va.interInicial.nombre + " a " + va.interF.nombre)
- while (true) {
+ var c = 0
+ while (c<100) {
    va.mover(dt)
  //t += dt
  //Grafico.graficarVehiculos(listadevehiculosOSimilar)
  //Thread.sleep(tRefresh)
  //
+   c = c + 1
  }
   }
  
@@ -249,14 +251,16 @@ def calcularTanInv(x1:Double,x2:Double,y1:Double,y2:Double):Double ={
       //primer cuadrante
       return a
     }else if(difx < 0 && dify >0){
-      //segundo cuadrante
-      return a +90
+      //segundo cuadrante"
+      return a + 180
     }else if(difx < 0 && dify <0){
       //tercer cuadrante
       return a + 180
-    }else{
+    }else if (difx > 0 && dify<0){
       //cuarto cuadrante
-      return a + 270
+      return 360 + a
+    }else{
+      return 0
     }
   }
 }

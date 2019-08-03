@@ -38,23 +38,33 @@ Simulacion.listaVehiculos.append(this)
 
 def mover(dt:Double){
     var angulo:Double = 0
+    var proximaInter:Interseccion = null
     if(posicion==interF){
       return //pasar
     }else{
       if(posicion==viaActual.origen){
         angulo = Simulacion.calcularTanInv(viaActual.origen.x, viaActual.fin.x, viaActual.origen.y, viaActual.fin.y)
+        proximaInter = viaActual.fin
       }else if(posicion == viaActual.fin){
         angulo = Simulacion.calcularTanInv(viaActual.fin.x, viaActual.origen.x, viaActual.fin.y, viaActual.origen.y)
+        proximaInter = viaActual.origen
       }
-      println("Interseccion a ir " + viaActual.origen.nombre +" "+ viaActual.fin.nombre)
-      println(angulo)
       velocidad.direccion = new Angulo(angulo)
       println(posicion)
       aumentarPosicion(dt)
       println(posicion)
+      val hipotenusa = math.abs(math.sqrt(math.pow((posicion.x - proximaInter.x ),2) +math.pow((posicion.y - proximaInter.y ), 2)))
+      if(hipotenusa <= velocidad.magnitud *dt){
+        println("Se llego a interseccion!")
+        posicion_(proximaInter.asInstanceOf[Punto])
+        println(proximaInter.nombre)
+        if(!pila.isEmpty){
+          viaActual = pila.dequeue()
+        }
+      }
     }
-  
 }
+  
 }
 
 object Vehiculo{
