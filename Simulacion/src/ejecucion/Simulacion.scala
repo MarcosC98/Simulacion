@@ -1,4 +1,5 @@
 package ejecucion
+import graficacion.Grafico
 import mapa.Via
 import movimiento.Velocidad
 import vehiculos.Carro
@@ -11,6 +12,7 @@ import mapa.Via
 import mapa.TipoVia
 import mapa.Sentido
 import plano.Angulo
+
 import scala.collection.mutable.ArrayBuffer
 //Singleton Object para que solo haya una instancia
 import vehiculos.Vehiculo
@@ -40,7 +42,8 @@ object Simulacion extends Runnable{
   val listaVehiculos = ArrayBuffer[Vehiculo]()
     
   
- def run() {   
+ def run() {
+   Grafico.dibujoVehiculos(Simulacion.listaVehiculos)
  val va = listaVehiculos(aleatorio.nextInt(numeroVehiculos))
  println("de " + va.interInicial.nombre + " a " + va.interF.nombre)
  var c = 0

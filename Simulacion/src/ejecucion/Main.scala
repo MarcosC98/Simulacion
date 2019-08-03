@@ -10,8 +10,8 @@ object Main extends App {
   Json.cargarDatosJson
   Simulacion.cargarDatosIniciales
   Grafico.graficaViasNodos(Simulacion.listaVias,Simulacion.listaIntersecciones)
-  Grafico.dibujoVehiculos(Simulacion.listaVehiculos)
   GrafoVia.construir(Simulacion.listaVias)
   Simulacion.generarVehiculosAleatorios
   Simulacion.run
+
 }
