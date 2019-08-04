@@ -19,12 +19,10 @@ abstract case class Vehiculo(var placa:String)(val interInicial:Interseccion,val
 extends Movil(interInicial,vel) with MovimientoUniforme {
   val figura: Shape
   val aleatorio = scala.util.Random
-  
   val tamanioInter = Simulacion.listaIntersecciones.size
   
   var c:Boolean = true
   var interF:Interseccion = Simulacion.listaIntersecciones(aleatorio.nextInt(tamanioInter))
-
   while(c){
     if(interInicial == interF){
       interF = Simulacion.listaIntersecciones(aleatorio.nextInt(tamanioInter))
@@ -38,30 +36,42 @@ extends Movil(interInicial,vel) with MovimientoUniforme {
   val recorrido = nodoi.shortestPathTo(nodof).get.edges.toList.map(_.toOuter.label.asInstanceOf[Via])
   val pila = Queue(recorrido: _*)
   var viaActual = pila.dequeue()
+  var proximaInter:Interseccion = interF
+  var angulo:Double = 0
+  
 Simulacion.listaVehiculos.append(this)  
 
 def mover(dt:Double){
-    var angulo:Double = 0
-    var proximaInter:Interseccion = null
-    if(posicion==interF){
-      return //pasar
+    if(posicion.x==interF.x && posicion.y == interF.y){
     }else{
       if(posicion==viaActual.origen){
         angulo = Simulacion.calcularTanInv(viaActual.origen.x, viaActual.fin.x, viaActual.origen.y, viaActual.fin.y)
         proximaInter = viaActual.fin
+        println(viaActual.origen.nombre + " a " + proximaInter._nombre+ " con angulo " + angulo)
       }else if(posicion == viaActual.fin){
         angulo = Simulacion.calcularTanInv(viaActual.fin.x, viaActual.origen.x, viaActual.fin.y, viaActual.origen.y)
         proximaInter = viaActual.origen
+        println(viaActual.fin.nombre + " a " + proximaInter.nombre+  " con angulo " + angulo)
       }
-      velocidad.direccion = new Angulo(angulo)
+      vel.direccion.grados = angulo
       aumentarPosicion(dt)
-      val hipotenusa = math.abs(math.sqrt(math.pow((posicion.x - proximaInter.x ),2) +math.pow((posicion.y - proximaInter.y ), 2)))
-      if(hipotenusa <= velocidad.magnitud *dt){
-
-        posicion_(proximaInter.asInstanceOf[Punto])
+      println(posicion)
+      val diferenciax = posicion.x - proximaInter.x
+      val diferenciay = posicion.y - proximaInter.y
+      println(diferenciax)
+      println(diferenciay)
+      val hipotenusa = math.abs(math.sqrt(math.pow((diferenciax ),2) +math.pow((diferenciay ), 2)))
+      if(hipotenusa <= Velocidad.metroSegkilometroHor(Simulacion.maxVelocidad)*dt*2){
+        println("pos antes" + posicion)
+        posicion.x_(proximaInter.x)
+        posicion.y_(proximaInter.y)
+        println("pos despues" + posicion)
 
         if(!pila.isEmpty){
           viaActual = pila.dequeue()
+        }else{
+          println("Terminaste!")
+          println("de: " + interInicial + " a " + interF)
         }
       }
     }

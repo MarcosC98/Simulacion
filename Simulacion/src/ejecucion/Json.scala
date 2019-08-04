@@ -6,7 +6,7 @@ import scala.collection.mutable.Map
 
 object Json{
   
-  val ruta = "C:\\Scala\\Simulacion\\src\\"//Varia dependiendo de donde está el archivo
+  val ruta = "C:\\Users\\marco\\git\\Simulacion\\Simulacion\\src\\"//Varia dependiendo de donde está el archivo
   val archivo = "parametros.json"
   val rutaarchivo = ruta + archivo
   var datos:Datos = null

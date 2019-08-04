@@ -44,10 +44,10 @@ object Simulacion extends Runnable{
   
  def run() {
    Grafico.dibujoVehiculos(Simulacion.listaVehiculos)
- val va = listaVehiculos(aleatorio.nextInt(numeroVehiculos))
- println("de " + va.interInicial.nombre + " a " + va.interF.nombre)
+ val va = listaVehiculos(aleatorio.nextInt(listaVehiculos.size - 1))
  var c = 0
- while (c<100) {
+ println("de " + va.interInicial._nombre +" " + va.interInicial + " a " + va.interF._nombre + " " + va.interF)
+ while (c<2000) {
    va.mover(dt)
  //t += dt
  //Grafico.graficarVehiculos(listadevehiculosOSimilar)

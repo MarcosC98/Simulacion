@@ -1,5 +1,5 @@
 package plano
-abstract case class Punto(private var _x:Int,private var _y:Int) {
+case class Punto(private var _x:Int,private var _y:Int) {
   
   //Accesores
   def x = _x

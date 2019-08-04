@@ -27,8 +27,8 @@ object Grafico {
     PlotOrientation.VERTICAL, false, false, false)
   val plantilla = graficaXY.getXYPlot()
   plantilla.setBackgroundPaint(Color.WHITE)
-  plantilla.getRangeAxis().setVisible(false)
-  plantilla.getDomainAxis().setVisible(false)
+  plantilla.getRangeAxis().setVisible(true)
+  plantilla.getDomainAxis().setVisible(true)
 
 
   val render = new XYLineAndShapeRenderer()

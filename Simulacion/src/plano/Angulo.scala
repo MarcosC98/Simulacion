@@ -1,3 +1,3 @@
 package plano
-case class Angulo (val grados:Double){
+case class Angulo (var grados:Double){
 }
