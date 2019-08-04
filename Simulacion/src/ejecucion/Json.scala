@@ -2,12 +2,14 @@ package ejecucion
 import net.liftweb.json._
 import scala.collection.mutable.ArrayBuffer
 import scala.io.Source
-import scala.collection.mutable.Map
-
+import java.io.PrintWriter
+import java.io.File
+import net.liftweb.json.Serialization.write
 object Json{
   
   val ruta = "C:\\Users\\marco\\git\\Simulacion\\Simulacion\\src\\"//Varia dependiendo de donde está el archivo
   val archivo = "parametros.json"
+  val archivor = "resultados.json"
   val rutaarchivo = ruta + archivo
   var datos:Datos = null
   
@@ -32,5 +34,12 @@ object Json{
     val json = parse(cadena)
     datos = json.extract[Datos]
     println("Funcionó el extraido de datos")  
+  }
+  
+    def escribirArchivo( resultados: ResultadosSimulacion) {
+    val pw = new PrintWriter(new File(ruta+archivor))
+    pw.write(write(resultados))
+    pw.close
+    println("Se escribió archivo")
   }
 }

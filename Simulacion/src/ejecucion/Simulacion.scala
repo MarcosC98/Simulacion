@@ -53,9 +53,9 @@ var c:Boolean = true
    Thread.sleep(tRefresh)
    c = !(terminar)
  }
+ println("Termina")
  promedioDestino = calcularPromedioVehiInter
  enviarDatosResultadosSimulacion
- //Json.escribirArchivo(resultadosSimulacion)
  
   }
   
@@ -91,17 +91,66 @@ def terminar :Boolean = {
   }
 }
 
+
+
 def enviarDatosResultadosSimulacion{
-  val rvehiculos = Vehiculos(410,120,150,80,50,10)
-  val vehiculoenInterseccion  = VehiculosEnInter(50,46,5,3)
-  val mallaVial = MallaVial(50,15,10,40,60,80,422,vehiculoenInterseccion)
-  val tiempos = Tiempo(600,50)
-  val velocidades = VelocidadResultados(40,80,63)
-  val distancias = Distancia(523,1540,1250)
   
-  val resul =  Resultados(rvehiculos,mallaVial,tiempos,velocidades,distancias)
-  val resultadosSimulacion = ResultadosSimulacion(resul)
+  val longitudPromedio = {
+  var suma:Double = 0
+  listaVias.foreach(v =>suma = suma + v.distancia)
+  suma / listaVias.size
+}
+
+val mayorVelocidad = {
+  val lista = (listaVehiculos.sortBy(v => v.vel.magnitud))
+  lista(lista.size-1).vel.magnitud
+}
+
+val menorVelocidad = {
+  val lista = (listaVehiculos.sortBy(v => v.vel.magnitud))
+  lista(0).vel.magnitud
+}
+
+val promedioVelocidad = {
+  var suma:Double = 0
+  listaVehiculos.foreach(v => suma = suma+v.vel.magnitud)
+  suma/listaVehiculos.size
+}
+
+val distanciaMinima = {
+  val lista =listaVehiculos.sortBy(v => v.distanciaARecorrer)
+  lista(0).distanciaARecorrer
+}
+
+val distanciaMaxima = {
+  val lista = listaVehiculos.sortBy(v => v.distanciaARecorrer)
+  lista(lista.size - 1).distanciaARecorrer
+}
+
+val distanciaPromedio = {
+  var suma:Double = 0
+  listaVehiculos.foreach(v => suma = suma + v.distanciaARecorrer)
+  suma/listaVehiculos.size
+}
+
+
+  val vehiculos = Vehiculos(numeroVehiculos,Simulacion.carros.toInt,
+      Simulacion.motos.toInt,Simulacion.buses.toInt,
+      Simulacion.camiones.toInt,Simulacion.mototaxis.toInt)
+  val vehiculosenInter  = VehiculosEnInter(Simulacion.promedioOrigen,
+      Simulacion.promedioDestino,0,0)
+  val mallaVial = MallaVial(listaVias.size,listaIntersecciones.size,
+      listaVias.filter(_.sentido.nombre == "Unico sentido").size,
+      listaVias.filter(_.sentido.nombre == "Doble via").size,
+      menorVelocidad,mayorVelocidad,
+      longitudPromedio,vehiculosenInter)
+  val tiempo = Tiempo(Simulacion.t,Simulacion.t * Simulacion.tRefresh)
+  val velocidad = VelocidadResultados(minVelocidad,maxVelocidad,promedioVelocidad)
+  val distancia = Distancia(distanciaMinima,distanciaMaxima,distanciaPromedio)
   
+  val resultados =  Resultados(vehiculos,mallaVial,tiempo,velocidad,distancia)
+  val resultadosSimulacion = ResultadosSimulacion(resultados)
+  Json.escribirArchivo(resultadosSimulacion)
 }
 
 

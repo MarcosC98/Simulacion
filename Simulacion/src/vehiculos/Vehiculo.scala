@@ -38,6 +38,11 @@ extends Movil(interInicial,vel) with MovimientoUniforme {
   var viaActual = pila.dequeue()
   var proximaInter:Interseccion = interF
   var angulo:Double = 0
+  val distanciaARecorrer = {
+    var suma:Double = 0
+    recorrido.foreach(v => suma = suma + v.distancia)
+    suma
+  }
   
 Simulacion.listaVehiculos.append(this)  
 

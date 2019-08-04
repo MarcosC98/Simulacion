@@ -8,5 +8,6 @@
 	<classpathentry kind="lib" path="C:/Users/marco/Downloads/jfreechart-1.0.19.jar"/>
 	<classpathentry kind="lib" path="C:/Users/marco/Downloads/lift-json_2.12-3.3.0.jar"/>
 	<classpathentry kind="lib" path="C:/Users/marco/Downloads/paranamer-2.8.jar"/>
+	<classpathentry kind="lib" path="C:/Users/marco/git/Simulacion/Simulacion/src/resultados.json"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
