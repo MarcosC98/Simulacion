@@ -43,18 +43,16 @@ object Simulacion extends Runnable{
     
   
  def run() {
-   Grafico.dibujoVehiculos(Simulacion.listaVehiculos)
- var c:Boolean = true
- while (c) {
+
+ while (true) {
    listaVehiculos.foreach(_.mover(dt))
    t += dt
-   c = !(terminar)
- //Grafico.graficarVehiculos(listadevehiculosOSimilar)
- //Thread.sleep(tRefresh)
+   Grafico.graficarVehiculos(listaVehiculos)
+   Thread.sleep(tRefresh)
  }
   }
  
-  
+
 def terminar :Boolean = {
   var listaVehiculosTerminados = listaVehiculos.filter(v => v.posicion.x == v.interF.x && v.posicion.y == v.interF.y)
   var listaVehiculosNoTerminados = listaVehiculos.filter(v=> v.posicion.x != v.interF.x && v.posicion.y != v.interF.y)
