@@ -61,7 +61,7 @@ def mover(dt:Double){
       println(diferenciax)
       println(diferenciay)
       val hipotenusa = math.abs(math.sqrt(math.pow((diferenciax ),2) +math.pow((diferenciay ), 2)))
-      if(hipotenusa <= Velocidad.metroSegkilometroHor(Simulacion.maxVelocidad)*dt*2){
+      if(hipotenusa <= Velocidad.metroSegkilometroHor(Simulacion.maxVelocidad)*dt*1.3){
         println("pos antes" + posicion)
         posicion.x_(proximaInter.x)
         posicion.y_(proximaInter.y)

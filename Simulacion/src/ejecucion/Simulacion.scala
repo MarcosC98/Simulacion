@@ -44,19 +44,31 @@ object Simulacion extends Runnable{
   
  def run() {
    Grafico.dibujoVehiculos(Simulacion.listaVehiculos)
- val va = listaVehiculos(aleatorio.nextInt(listaVehiculos.size - 1))
- var c = 0
- println("de " + va.interInicial._nombre +" " + va.interInicial + " a " + va.interF._nombre + " " + va.interF)
- while (c<2000) {
-   va.mover(dt)
- //t += dt
+ var c:Boolean = true
+ while (c) {
+   listaVehiculos.foreach(_.mover(dt))
+   t += dt
+   c = !(terminar)
  //Grafico.graficarVehiculos(listadevehiculosOSimilar)
  //Thread.sleep(tRefresh)
- //
-   c = c + 1
  }
   }
  
+  
+def terminar :Boolean = {
+  var listaVehiculosTerminados = listaVehiculos.filter(v => v.posicion.x == v.interF.x && v.posicion.y == v.interF.y)
+  var listaVehiculosNoTerminados = listaVehiculos.filter(v=> v.posicion.x != v.interF.x && v.posicion.y != v.interF.y)
+  println("terminados: " + listaVehiculosTerminados.size)
+  println("no terminados: " + listaVehiculosNoTerminados.size)
+  listaVehiculosNoTerminados.foreach(v => println("A: " + v.posicion + " I " + v.interInicial.nombre + " F " + v.interF.nombre))
+  println("todos: " + listaVehiculos.size)
+  if (listaVehiculosTerminados.size ==  listaVehiculos.size){
+    return true
+  }else{
+    return false
+  }
+}
+
 
   
 def generarVehiculosAleatorios{
