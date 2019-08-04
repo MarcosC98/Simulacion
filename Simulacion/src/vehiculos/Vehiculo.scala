@@ -47,32 +47,25 @@ def mover(dt:Double){
       if(posicion==viaActual.origen){
         angulo = Simulacion.calcularTanInv(viaActual.origen.x, viaActual.fin.x, viaActual.origen.y, viaActual.fin.y)
         proximaInter = viaActual.fin
-        println(viaActual.origen.nombre + " a " + proximaInter._nombre+ " con angulo " + angulo)
       }else if(posicion == viaActual.fin){
         angulo = Simulacion.calcularTanInv(viaActual.fin.x, viaActual.origen.x, viaActual.fin.y, viaActual.origen.y)
         proximaInter = viaActual.origen
-        println(viaActual.fin.nombre + " a " + proximaInter.nombre+  " con angulo " + angulo)
-      }
+        }
       vel.direccion.grados = angulo
       aumentarPosicion(dt)
-      println(posicion)
       val diferenciax = posicion.x - proximaInter.x
       val diferenciay = posicion.y - proximaInter.y
-      println(diferenciax)
-      println(diferenciay)
       val hipotenusa = math.abs(math.sqrt(math.pow((diferenciax ),2) +math.pow((diferenciay ), 2)))
-      if(hipotenusa <= Velocidad.metroSegkilometroHor(Simulacion.maxVelocidad)*dt*1.6){
-        println("pos antes" + posicion)
+      //Cuando el movimiento es vertical o horizontal el margen puede ser bajo
+      //Los movimientos en angulo se desvian mucho y toca tener un rango alto 
+      if(hipotenusa <= Velocidad.kilometroHorMetroSeg(Simulacion.maxVelocidad)*dt * 20){
         posicion.x_(proximaInter.x)
         posicion.y_(proximaInter.y)
-        println("pos despues" + posicion)
 
         if(!pila.isEmpty){
           viaActual = pila.dequeue()
-        }else{
-          println("Terminaste!")
-          println("de: " + interInicial + " a " + interF)
         }
+        
       }
     }
 }

@@ -21,6 +21,8 @@ object Simulacion extends Runnable{
   
   val aleatorio = scala.util.Random
   
+  var promedioOrigen:Double = _
+  var promedioDestino:Double = _
   val dt = Json.datos.pametrosSimulacion.dt
   val tRefresh = Json.datos.pametrosSimulacion.tRefresh
   val minVehiculos = Json.datos.pametrosSimulacion.vehiculos.minimo
@@ -43,28 +45,63 @@ object Simulacion extends Runnable{
     
   
  def run() {
-
- while (true) {
+var c:Boolean = true
+ while (c) {
    listaVehiculos.foreach(_.mover(dt))
    t += dt
    Grafico.graficarVehiculos(listaVehiculos)
    Thread.sleep(tRefresh)
+   c = !(terminar)
  }
-  }
+ promedioDestino = calcularPromedioVehiInter
+ enviarDatosResultadosSimulacion
+ //Json.escribirArchivo(resultadosSimulacion)
  
+  }
+  
+ 
+
+def calcularVehiculosEnInter{
+  listaIntersecciones.foreach(i =>{
+  var contadorVehiculos = 0
+  listaVehiculos.foreach(v => 
+    if(v.posicion.x == i.x && v.posicion.y == i.y){
+      contadorVehiculos = contadorVehiculos +  1
+    })
+    i.vehiculosEnInter_(contadorVehiculos)
+})
+}
+
+def calcularPromedioVehiInter:Double ={
+  calcularVehiculosEnInter
+  var promedio:Double = 0
+  listaIntersecciones.foreach(i=>{
+  promedio = promedio + (i.vehiculosEnInter.toDouble / listaIntersecciones.size.toDouble)
+  })
+  promedio
+}
 
 def terminar :Boolean = {
   var listaVehiculosTerminados = listaVehiculos.filter(v => v.posicion.x == v.interF.x && v.posicion.y == v.interF.y)
   var listaVehiculosNoTerminados = listaVehiculos.filter(v=> v.posicion.x != v.interF.x && v.posicion.y != v.interF.y)
-  println("terminados: " + listaVehiculosTerminados.size)
-  println("no terminados: " + listaVehiculosNoTerminados.size)
-  listaVehiculosNoTerminados.foreach(v => println("A: " + v.posicion + " I " + v.interInicial.nombre + " F " + v.interF.nombre))
-  println("todos: " + listaVehiculos.size)
   if (listaVehiculosTerminados.size ==  listaVehiculos.size){
     return true
   }else{
     return false
   }
+}
+
+def enviarDatosResultadosSimulacion{
+  val rvehiculos = Vehiculos(410,120,150,80,50,10)
+  val vehiculoenInterseccion  = VehiculosEnInter(50,46,5,3)
+  val mallaVial = MallaVial(50,15,10,40,60,80,422,vehiculoenInterseccion)
+  val tiempos = Tiempo(600,50)
+  val velocidades = VelocidadResultados(40,80,63)
+  val distancias = Distancia(523,1540,1250)
+  
+  val resul =  Resultados(rvehiculos,mallaVial,tiempos,velocidades,distancias)
+  val resultadosSimulacion = ResultadosSimulacion(resul)
+  
 }
 
 
@@ -120,6 +157,7 @@ while(b<buses || c<carros || m<motos || mt<mototaxis || ca<camiones){
   if(listaVehiculos.size < numeroVehiculos){
     Vehiculo.vehiculoAleatorio
   }
+  promedioOrigen = calcularPromedioVehiInter
 }
   
   def cargarDatosIniciales {
@@ -241,7 +279,7 @@ while(b<buses || c<carros || m<motos || mt<mototaxis || ca<camiones){
       println("Se han cargado las vias")
   }
 
-def calcularTanInv(x1:Double,x2:Double,y1:Double,y2:Double):Double ={
+def calcularTanInv(x1:Double,x2:Double,y1:Double,y2:Double):Int ={
   val difx = x2 - x1
   val dify = y2 - y1
   
@@ -259,7 +297,7 @@ def calcularTanInv(x1:Double,x2:Double,y1:Double,y2:Double):Double ={
     }
   }else{
     val m = dify/difx
-    val a = scala.math.atan(m).toDegrees.round
+    val a = scala.math.atan(m).toDegrees.round.toInt
     if(difx > 0 && dify > 0){
       //primer cuadrante
       return a
