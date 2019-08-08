@@ -149,7 +149,7 @@ val distanciaPromedio = {
       listaVias.filter(_.sentido.nombre == "Doble via").size,
       menorVelocidad,mayorVelocidad,
       longitudPromedio,vehiculosenInter)
-  val tiempo = Tiempo(Simulacion.t,Simulacion.t * Simulacion.tRefresh)
+  val tiempo = Tiempo(Simulacion.t,Simulacion.t * tRefresh * 1/100)
   val velocidad = VelocidadResultados(minVelocidad,maxVelocidad,promedioVelocidad)
   val distancia = Distancia(distanciaMinima,distanciaMaxima,distanciaPromedio)
 
