@@ -1,21 +1,20 @@
 package graficacion
+import java.awt.event.{KeyEvent, KeyListener}
 import java.awt.{BasicStroke, Color}
 
 import javax.swing.JFrame
 import mapa.{Interseccion, Via}
-import org.jfree.chart.ChartFrame
 import org.jfree.chart.ChartFactory
-import org.jfree.chart.JFreeChart
 import org.jfree.chart.plot.PlotOrientation
-import org.jfree.chart.plot.XYPlot
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer
 import org.jfree.data.xy.XYSeries
 import org.jfree.data.xy.XYSeriesCollection
 import org.jfree.chart.ChartFrame
-import org.jfree.chart.axis.ValueAxis
 import org.jfree.chart.annotations.XYTextAnnotation
 import java.util.Random
 
+import ejecucion.{GrafoVia, Json, Main, Simulacion}
+import ejecucion.Simulacion.listaVehiculos
 import vehiculos.Vehiculo
 
 import scala.collection.mutable.ArrayBuffer
@@ -42,6 +41,27 @@ object Grafico {
   cuadroGrafico.setVisible(true)
   cuadroGrafico.setSize(1520, 720)
   cuadroGrafico.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE)
+
+  cuadroGrafico.addKeyListener(new KeyListener {
+
+
+    override def keyPressed(keyEvent: KeyEvent): Unit = {
+
+      val key: Int = keyEvent.getKeyCode
+
+      if (key == KeyEvent.VK_F5) {
+        Simulacion.run
+      }
+      else if (key == KeyEvent.VK_F6) {
+        Simulacion.parar
+      }
+
+    }
+
+    override def keyTyped(e: KeyEvent): Unit = {}
+
+    override def keyReleased(e: KeyEvent): Unit = {}
+  })
 
   def graficaViasNodos(vias: ArrayBuffer[Via], intersecciones: ArrayBuffer[Interseccion]) = {
     var numAux: Int = 0
@@ -70,7 +90,8 @@ object Grafico {
 
     })
   }
-  def graficarVehiculos (vehiculos: ArrayBuffer[Vehiculo]) = {
+
+  def graficarVehiculos(vehiculos: ArrayBuffer[Vehiculo]) = {
     vehiculos.foreach(j => {
       val vehiculo = dataset.getSeries(j.placa)
       vehiculo.clear()

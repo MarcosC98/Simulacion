@@ -42,23 +42,28 @@ object Simulacion extends Runnable{
   val listaIntersecciones = ArrayBuffer[Interseccion]()
   val listaVias = ArrayBuffer[Via]()
   val listaVehiculos = ArrayBuffer[Vehiculo]()
-    
-  
+
+  var c:Boolean = true
  def run() {
-var c:Boolean = true
+
  while (c) {
    listaVehiculos.foreach(_.mover(dt))
    t += dt
    Grafico.graficarVehiculos(listaVehiculos)
    Thread.sleep(tRefresh)
-   c = !(terminar)
+   if (terminar) c = false
+
  }
- println("Termina")
+
+
  promedioDestino = calcularPromedioVehiInter
  enviarDatosResultadosSimulacion
+ //Json.escribirArchivo(resultadosSimulacion)
  
+}
+  def parar={
+    c=false
   }
-  
  
 
 def calcularVehiculosEnInter{
@@ -94,7 +99,7 @@ def terminar :Boolean = {
 
 
 def enviarDatosResultadosSimulacion{
-  
+
   val longitudPromedio = {
   var suma:Double = 0
   listaVias.foreach(v =>suma = suma + v.distancia)
@@ -147,7 +152,7 @@ val distanciaPromedio = {
   val tiempo = Tiempo(Simulacion.t,Simulacion.t * Simulacion.tRefresh)
   val velocidad = VelocidadResultados(minVelocidad,maxVelocidad,promedioVelocidad)
   val distancia = Distancia(distanciaMinima,distanciaMaxima,distanciaPromedio)
-  
+
   val resultados =  Resultados(vehiculos,mallaVial,tiempo,velocidad,distancia)
   val resultadosSimulacion = ResultadosSimulacion(resultados)
   Json.escribirArchivo(resultadosSimulacion)
@@ -328,7 +333,7 @@ while(b<buses || c<carros || m<motos || mt<mototaxis || ca<camiones){
       println("Se han cargado las vias")
   }
 
-def calcularTanInv(x1:Double,x2:Double,y1:Double,y2:Double):Int ={
+def calcularTanInv(x1:Double,x2:Double,y1:Double,y2:Double):Double ={
   val difx = x2 - x1
   val dify = y2 - y1
   
@@ -346,7 +351,7 @@ def calcularTanInv(x1:Double,x2:Double,y1:Double,y2:Double):Int ={
     }
   }else{
     val m = dify/difx
-    val a = scala.math.atan(m).toDegrees.round.toInt
+    val a = scala.math.atan(m).toDegrees
     if(difx > 0 && dify > 0){
       //primer cuadrante
       return a

@@ -63,7 +63,7 @@ def mover(dt:Double){
       val hipotenusa = math.abs(math.sqrt(math.pow((diferenciax ),2) +math.pow((diferenciay ), 2)))
       //Cuando el movimiento es vertical o horizontal el margen puede ser bajo
       //Los movimientos en angulo se desvian mucho y toca tener un rango alto 
-      if(hipotenusa <= Velocidad.kilometroHorMetroSeg(Simulacion.maxVelocidad)*dt * 20){
+      if(hipotenusa <= Velocidad.kilometroHorMetroSeg(Simulacion.maxVelocidad)*dt * 1){
         posicion.x_(proximaInter.x)
         posicion.y_(proximaInter.y)
 
