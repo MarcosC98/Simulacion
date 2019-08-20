@@ -7,7 +7,7 @@ import java.io.File
 import net.liftweb.json.Serialization.write
 object Json{
   
-  val ruta = "C:\\Users\\marco\\git\\Simulacion\\Simulacion\\src\\"//Varia dependiendo de donde está el archivo
+  val ruta = "D:\\Eclipse - Scala\\proyectos\\git\\Simulacion\\Simulacion\\src\\"//Varia dependiendo de donde está el archivo
   val archivo = "parametros.json"
   val archivor = "resultados.json"
   val rutaarchivo = ruta + archivo

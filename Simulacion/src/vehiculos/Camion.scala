@@ -8,7 +8,7 @@ import movimiento.Velocidad
 import org.jfree.util.ShapeUtilities
 
 import scala.util.Random
-class Camion (var placaCM:String,origen:Interseccion,velocidad:Velocidad) extends Vehiculo(placaCM)(origen,velocidad){
+class Camion (var placaCM:String,velocidad:Velocidad) extends Vehiculo(placaCM)(velocidad){
     
   var placaGenerada:String = "R"
   

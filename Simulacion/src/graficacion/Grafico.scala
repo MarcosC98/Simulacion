@@ -86,7 +86,7 @@ object Grafico {
       dataset.addSeries(new XYSeries(r.placa))
       val vehiculoIndex = dataset.getSeriesIndex(r.placa)
       render.setSeriesShape(vehiculoIndex, r.figura)
-      render.setSeriesPaint(vehiculoIndex, Color.decode(r.interF.color))
+      render.setSeriesPaint(vehiculoIndex, Color.decode(r.viaje.interF.color))
 
     })
   }
@@ -95,7 +95,7 @@ object Grafico {
     vehiculos.foreach(j => {
       val vehiculo = dataset.getSeries(j.placa)
       vehiculo.clear()
-      vehiculo.add(j._posicion.x, j._posicion.y)
+      vehiculo.add(j.posicion.x, j.posicion.y)
     })
 
   }

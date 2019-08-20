@@ -1,5 +1,6 @@
 package ejecucion
 import graficacion.Grafico
+import vehiculos.Viaje
 import mapa.Via
 import movimiento.Velocidad
 import vehiculos.Carro
@@ -42,6 +43,7 @@ object Simulacion extends Runnable{
   val listaIntersecciones = ArrayBuffer[Interseccion]()
   val listaVias = ArrayBuffer[Via]()
   val listaVehiculos = ArrayBuffer[Vehiculo]()
+  val listaViajes = ArrayBuffer[Viaje]()
 
   var c:Boolean = true
  def run() {
@@ -58,7 +60,6 @@ object Simulacion extends Runnable{
 
  promedioDestino = calcularPromedioVehiInter
  enviarDatosResultadosSimulacion
- //Json.escribirArchivo(resultadosSimulacion)
  
 }
   def parar={
@@ -87,8 +88,8 @@ def calcularPromedioVehiInter:Double ={
 }
 
 def terminar :Boolean = {
-  var listaVehiculosTerminados = listaVehiculos.filter(v => v.posicion.x == v.interF.x && v.posicion.y == v.interF.y)
-  var listaVehiculosNoTerminados = listaVehiculos.filter(v=> v.posicion.x != v.interF.x && v.posicion.y != v.interF.y)
+  var listaVehiculosTerminados = listaVehiculos.filter(v => v.posicion.x == v.viaje.interF.x && v.posicion.y == v.viaje.interF.y)
+  var listaVehiculosNoTerminados = listaVehiculos.filter(v=> v.posicion.x != v.viaje.interF.x && v.posicion.y != v.viaje.interF.y)
   if (listaVehiculosTerminados.size ==  listaVehiculos.size){
     return true
   }else{

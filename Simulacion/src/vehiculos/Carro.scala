@@ -8,7 +8,7 @@ import movimiento.Velocidad
 import org.jfree.util.ShapeUtilities
 
 import scala.util.Random
-class Carro (var placaC:String,origen:Interseccion,velocidad:Velocidad) extends Vehiculo(placaC)(origen,velocidad){
+class Carro (var placaC:String,velocidad:Velocidad) extends Vehiculo(placaC)(velocidad){
   
   
   val aleatorioC = scala.util.Random
