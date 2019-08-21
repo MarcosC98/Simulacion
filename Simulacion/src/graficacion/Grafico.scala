@@ -75,7 +75,7 @@ object Grafico {
     })
     intersecciones.foreach({
       x =>
-        val interseccion = new XYTextAnnotation(x.nombre, x.x, x.y)
+        val interseccion = new XYTextAnnotation(x.nombre.getOrElse(""), x.x, x.y)
         interseccion.setPaint(Color.decode(x.color))
         plantilla.addAnnotation(interseccion)
     })

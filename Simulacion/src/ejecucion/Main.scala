@@ -10,5 +10,4 @@ object Main extends App {
   Simulacion.generarVehiculosAleatorios
   Grafico.dibujarVehiculos(listaVehiculos)
   Simulacion.run
-
 }

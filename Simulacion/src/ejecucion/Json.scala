@@ -22,8 +22,10 @@ object Json{
   case class pametrosProporciones(carros:Double,motos:Double,buses:Double
       ,camiones:Double,motoTaxis:Double)
       
-  case class pametrosSimulacion(dt :Int,tRefresh:Int,vehiculos:pametrosVehiculos,
-      velocidad:pametrosVelocidad,proporciones:pametrosProporciones)
+  case class pametrosSemaforos(minTiempoVerde:Int,maxTiempoVerde:Int,tiempoAmarillo:Int)
+      
+  case class pametrosSimulacion(dt :Double,tRefresh:Double,vehiculos:pametrosVehiculos,
+      velocidad:pametrosVelocidad,proporciones:pametrosProporciones,semaforos:pametrosSemaforos)
       
   case class Datos(pametrosSimulacion:pametrosSimulacion) 
   
