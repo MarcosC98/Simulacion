@@ -11,4 +11,5 @@ class Semaforo(_lugar:Punto) {
   val tAmarilloOriginal = Simulacion.tiempoAmarillo
   var tAmarillo:Double = tAmarilloOriginal
   Simulacion.listaSemaforos.append(this)
+  
 }

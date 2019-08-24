@@ -9,7 +9,5 @@ object Main extends App {
   GrafoVia.construir(Simulacion.listaVias)
   Simulacion.generarVehiculosAleatorios
   Grafico.dibujarVehiculos(listaVehiculos)
-  Simulacion.listaSemaforos.foreach(s => println(s.estado))
   Simulacion.run
-  Simulacion.listaSemaforos.foreach(s => println(s.estado))
 }

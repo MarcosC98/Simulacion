@@ -6,7 +6,8 @@ import mapa.Interseccion
 import movimiento.Movil
 import movimiento.MovimientoUniforme
 import movimiento.Velocidad
-
+import mapa.Semaforo
+import mapa.NodoSemaforo
 import scala.util.Random
 import ejecucion.Simulacion
 import plano.Angulo
@@ -25,6 +26,8 @@ extends Movil(vel) with MovimientoUniforme {
   val viaje = new Viaje(this)
   
   var viaActual = viaje.pila.dequeue()
+  var siguienteSemaforo:Semaforo = null
+  var lugarSemaforo:Punto = null
   var proximaInter:Interseccion = viaje.interF
   posicion = new Punto(viaje.interI.x,viaje.interI.y)
   var angulo:Double = 0
@@ -39,14 +42,17 @@ Simulacion.listaVehiculos.append(this)
 
 def mover(dt:Double){
     if(posicion.x==viaje.interF.x && posicion.y == viaje.interF.y){
-    }else{
+    }else if(siguienteSemaforo == null || siguienteSemaforo.estado != "Rojo" || posicion != lugarSemaforo){
       if(posicion==viaActual.origen){
         angulo = Simulacion.calcularTanInv(viaActual.origen.x, viaActual.fin.x, viaActual.origen.y, viaActual.fin.y)
         proximaInter = viaActual.fin
+        siguienteSemaforo = viaActual.semaforos(0)
       }else if(posicion == viaActual.fin){
         angulo = Simulacion.calcularTanInv(viaActual.fin.x, viaActual.origen.x, viaActual.fin.y, viaActual.origen.y)
         proximaInter = viaActual.origen
+        siguienteSemaforo = viaActual.semaforos(1)
         }
+      lugarSemaforo = siguienteSemaforo.lugar      
       vel.direccion.grados = angulo
       aumentarPosicion(dt)
       val diferenciax = posicion.x - proximaInter.x

@@ -16,5 +16,7 @@ class Via(iorigen: Interseccion, ifinal: Interseccion, velmax: Int,
   semaforos.append(new Semaforo(fin))
   if (_sentido.nombre == "Doble via") {
     semaforos.append(new Semaforo(origen))
+  }else{
+    semaforos.append(null)
   }
 }
