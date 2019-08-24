@@ -12,6 +12,8 @@ import mapa.Interseccion
 import mapa.Via
 import mapa.TipoVia
 import mapa.Sentido
+import mapa.Semaforo
+import mapa.NodoSemaforo
 import plano.Angulo
 
 import scala.collection.mutable.ArrayBuffer
@@ -21,11 +23,11 @@ import scala.util
 object Simulacion extends Runnable{
   
   val aleatorio = scala.util.Random
-  
   var promedioOrigen:Double = _
   var promedioDestino:Double = _
   val dt = Json.datos.pametrosSimulacion.dt
   val tRefresh = Json.datos.pametrosSimulacion.tRefresh
+  val msEspera = (tRefresh * 1000).toLong
   val minVehiculos = Json.datos.pametrosSimulacion.vehiculos.minimo
   val maxVehiculos = Json.datos.pametrosSimulacion.vehiculos.maximo
   val minVelocidad = Json.datos.pametrosSimulacion.velocidad.minimo
@@ -39,6 +41,7 @@ object Simulacion extends Runnable{
   val motos = scala.math.round(Json.datos.pametrosSimulacion.proporciones.motos * numeroVehiculos)
   val mototaxis = scala.math.round(Json.datos.pametrosSimulacion.proporciones.motoTaxis * numeroVehiculos)
   val camiones = scala.math.round(Json.datos.pametrosSimulacion.proporciones.camiones * numeroVehiculos)
+  val Nodo = new NodoSemaforo
   
   var t: Double =0
   
@@ -47,20 +50,23 @@ object Simulacion extends Runnable{
   val listaVias = ArrayBuffer[Via]()
   val listaVehiculos = ArrayBuffer[Vehiculo]()
   val listaViajes = ArrayBuffer[Viaje]()
+  val listaSemaforos = ArrayBuffer[Semaforo]()
 
   var c:Boolean = true
  def run() {
 
  while (c) {
+   
+   Nodo.controlarFlujoSemaforos
    listaVehiculos.foreach(_.mover(dt))
    t += dt
    Grafico.graficarVehiculos(listaVehiculos)
-   Thread.sleep(tRefresh.toLong)
+   Thread.sleep(msEspera)
    if (terminar) c = false
  }
+ 
  promedioDestino = calcularPromedioVehiInter
  enviarDatosResultadosSimulacion
- println("Tiempo:" + t/(100*tRefresh) +" segundos")
 }
   def parar={
     c=false

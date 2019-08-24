@@ -9,12 +9,12 @@ class Via(iorigen: Interseccion, ifinal: Interseccion, velmax: Int,
   type T = Interseccion
   val origen = iorigen
   val fin = ifinal
-  val semaforos = ArrayBuffer[Semaforo]()
+  val semaforos = ArrayBuffer[Semaforo]()//El semaforo en 0 será el de fin, y el de 1 será el origen si es doble via
   def sentido = _sentido
   def distancia = Math.sqrt(Math.pow((fin.x - origen.x), 2) + Math.pow((fin.y - origen.y), 2))
   val angulo = new Angulo(Simulacion.calcularTanInv(origen.x, fin.x, origen.y, fin.y))
-  semaforos.append(new Semaforo(origen))
+  semaforos.append(new Semaforo(fin))
   if (_sentido.nombre == "Doble via") {
-    semaforos.append(new Semaforo(fin))
+    semaforos.append(new Semaforo(origen))
   }
 }
