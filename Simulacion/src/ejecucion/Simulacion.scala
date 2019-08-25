@@ -75,6 +75,7 @@ object Simulacion extends Runnable{
   
 //  def run{
 //  var vehiculoAleatorio = listaVehiculos(0)
+//  println("VA A : " + vehiculoAleatorio.viaje.interF.nombre)
 //  while(c){
 //    Nodo.controlarFlujoSemaforos
 //    vehiculoAleatorio.mover(dt)
@@ -83,7 +84,7 @@ object Simulacion extends Runnable{
 //    Thread.sleep(msEspera)
 //  }
 //  }
-//  
+  
   
   def parar={
     c=false

@@ -17,9 +17,9 @@ import mapa.Via
 import scala.collection.mutable.Queue
 import movimiento.MovimientoAcelerado
 
-abstract case class Vehiculo(var placa: String)( val velmax: Velocidad,val aceleracionOriginal:Double)
-  extends Movil(velmax,aceleracionOriginal) with MovimientoAcelerado {
-//aceleracion en m/s
+abstract case class Vehiculo(var placa: String)(val velmax: Velocidad, val aceleracionOriginal: Double)
+  extends Movil(velmax, aceleracionOriginal) with MovimientoAcelerado {
+  //aceleracion en m/s
   val figura: Shape
   val aleatorio = scala.util.Random
   val tamanioInter = Simulacion.listaIntersecciones.size
@@ -32,13 +32,13 @@ abstract case class Vehiculo(var placa: String)( val velmax: Velocidad,val acele
   posicion = new Punto(viaje.interI.x, viaje.interI.y)
   var angulo: Double = 0
   var frenado: Double = 0
-  var atraviesaAmarillo:Boolean = false
+  var atraviesaAmarillo: Boolean = false
   val distanciaARecorrer = {
     var suma: Double = 0
     viaje.pila.foreach(v => suma = suma + v.distancia)
     suma
   }
-  var distanciaHastaSemaforo:Double = 0
+  var distanciaHastaSemaforo: Double = 0
 
   Simulacion.listaVehiculos.append(this)
 
@@ -49,22 +49,29 @@ abstract case class Vehiculo(var placa: String)( val velmax: Velocidad,val acele
       lugarSemaforo = siguienteSemaforo.lugar
       velmax.direccion.grados = angulo
       distanciaHastaSemaforo = math.abs(math.sqrt(math.pow((posicion.x - proximaInter.x), 2) + math.pow((posicion.y - proximaInter.y), 2)))
-    if((siguienteSemaforo.estado == "Rojo" || siguienteSemaforo.estado == "Amarillo" )&& distanciaHastaSemaforo <= Simulacion.XSemaforoFrenar){
-      calcularFrenado//en la variable frenado se queda la aceleracion negativa necesaria para frenar al siguiente semaforo
-     aceleracion = frenado
-   }
-//      
-//      if(siguienteSemaforo.estado == "Amarillo" && distanciaHastaSemaforo <= Simulacion.XAmarilloContinuar){
-//        atraviesaAmarillo = true
-//      }
+      if ((siguienteSemaforo.estado == "Rojo" || siguienteSemaforo.estado == "Amarillo") && distanciaHastaSemaforo <= Simulacion.XSemaforoFrenar) {
+        calcularFrenado //en la variable frenado se queda la aceleracion negativa necesaria para frenar al siguiente semaforo
+        aceleracion = frenado
+      }
+
+      if (siguienteSemaforo.estado == "Amarillo" && distanciaHastaSemaforo <= Simulacion.XAmarilloContinuar) {
+        aceleracion = aceleracionO
+      }
+      
       aumentarPosicion(dt)
+      if (velActual.magnitud != 0 && velActual.magnitud < 0.1) {
+        velActual.magnitud = 0
+        aceleracion = aceleracionO
+        posicion.x_(proximaInter.x)
+        posicion.y_(proximaInter.y)
+      }
       revisarMargenDeError
     }
   }
-  
-  def calcularFrenado{
-    val tiempoHastaSemaforo = distanciaHastaSemaforo/Velocidad.kilometroHorMetroSeg(velActual.magnitud)
-    frenado = - Velocidad.kilometroHorMetroSeg(velActual.magnitud)/tiempoHastaSemaforo
+
+  def calcularFrenado {
+    val tiempoHastaSemaforo = distanciaHastaSemaforo / Velocidad.kilometroHorMetroSeg(velActual.magnitud)
+    frenado = -Velocidad.kilometroHorMetroSeg(velActual.magnitud) / tiempoHastaSemaforo
   }
 
   def obtenerSiguientesDatos {
@@ -96,14 +103,11 @@ abstract case class Vehiculo(var placa: String)( val velmax: Velocidad,val acele
 
     }
   }
-  
-  def getVelMax :Velocidad = {
-    return velmax
-  }
 
 }
 
 object Vehiculo {
+
   def vehiculoAleatorio: Vehiculo = {
     val aleatorio = scala.util.Random
     val numeroAleatorio = aleatorio.nextInt(5)
@@ -112,19 +116,19 @@ object Vehiculo {
     val aceleracion = Simulacion.minAce + aleatorio.nextInt(Simulacion.maxAce - Simulacion.minAce)
 
     if (numeroAleatorio == 0) {
-      val instancia = new Carro("", new Velocidad(magAleatoria)(new Angulo(anguloAleatorio)),aceleracion)
+      val instancia = new Carro("", new Velocidad(magAleatoria)(new Angulo(anguloAleatorio)), aceleracion)
       instancia
     } else if (numeroAleatorio == 1) {
-      val instancia = new Moto("", new Velocidad(magAleatoria)(new Angulo(anguloAleatorio)),aceleracion)
+      val instancia = new Moto("", new Velocidad(magAleatoria)(new Angulo(anguloAleatorio)), aceleracion)
       instancia
     } else if (numeroAleatorio == 2) {
-      val instancia = new Bus("", new Velocidad(magAleatoria)(new Angulo(anguloAleatorio)),aceleracion)
+      val instancia = new Bus("", new Velocidad(magAleatoria)(new Angulo(anguloAleatorio)), aceleracion)
       instancia
     } else if (numeroAleatorio == 3) {
-      val instancia = new Camion("", new Velocidad(magAleatoria)(new Angulo(anguloAleatorio)),aceleracion)
+      val instancia = new Camion("", new Velocidad(magAleatoria)(new Angulo(anguloAleatorio)), aceleracion)
       instancia
     } else {
-      val instancia = new MotoTaxi("", new Velocidad(magAleatoria)(new Angulo(anguloAleatorio)),aceleracion)
+      val instancia = new MotoTaxi("", new Velocidad(magAleatoria)(new Angulo(anguloAleatorio)), aceleracion)
       instancia
     }
   }

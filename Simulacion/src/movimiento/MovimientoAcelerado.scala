@@ -1,5 +1,5 @@
 package movimiento
-
+import vehiculos.Vehiculo
 trait MovimientoAcelerado extends Movil {
  
   
@@ -17,14 +17,5 @@ trait MovimientoAcelerado extends Movil {
       velActual.magnitud = velMax
     }
     
-    if(velActual.magnitud != 0 && velActual.magnitud < 0.00001){
-      velActual.magnitud = 0
-      aceleracion = aceleracionO
-    }
-    
-//    if(velActual.magnitud > -2 && velActual.magnitud < 2){
-//      velActual.magnitud = 0
-//      aceleracion = aceleracionO
-//    }
   } 
 }
