@@ -35,6 +35,10 @@ object Simulacion extends Runnable{
   val minTiempoVerde = Json.datos.pametrosSimulacion.semaforos.minTiempoVerde
   val maxTiempoVerde = Json.datos.pametrosSimulacion.semaforos.maxTiempoVerde
   val tiempoAmarillo = Json.datos.pametrosSimulacion.semaforos.tiempoAmarillo
+  val minAce = Json.datos.pametrosSimulacion.aceleracion.minimo
+  val maxAce = Json.datos.pametrosSimulacion.aceleracion.maximo
+  val XSemaforoFrenar = Json.datos.pametrosSimulacion.distanciasFrenadoVehiculos.XSemaforoFrenar
+  val XAmarilloContinuar = Json.datos.pametrosSimulacion.distanciasFrenadoVehiculos.XSemaforoAmarilloContinuar
   val numeroVehiculos = minVehiculos + aleatorio.nextInt(maxVehiculos - minVehiculos)
   val buses = scala.math.round(Json.datos.pametrosSimulacion.proporciones.buses * numeroVehiculos)
   val carros = scala.math.round(Json.datos.pametrosSimulacion.proporciones.carros * numeroVehiculos)
@@ -68,6 +72,19 @@ object Simulacion extends Runnable{
  promedioDestino = calcularPromedioVehiInter
  enviarDatosResultadosSimulacion
 }
+  
+//  def run{
+//  var vehiculoAleatorio = listaVehiculos(0)
+//  while(c){
+//    Nodo.controlarFlujoSemaforos
+//    vehiculoAleatorio.mover(dt)
+//    t+= dt
+//    Grafico.graficarVehiculos(listaVehiculos)
+//    Thread.sleep(msEspera)
+//  }
+//  }
+//  
+  
   def parar={
     c=false
   }
@@ -114,18 +131,18 @@ def enviarDatosResultadosSimulacion{
 }
 
 val mayorVelocidad = {
-  val lista = (listaVehiculos.sortBy(v => v.vel.magnitud))
-  lista(lista.size-1).vel.magnitud
+  val lista = (listaVehiculos.sortBy(v => v.velmax.magnitud))
+  lista(lista.size-1).velmax.magnitud
 }
 
 val menorVelocidad = {
-  val lista = (listaVehiculos.sortBy(v => v.vel.magnitud))
-  lista(0).vel.magnitud
+  val lista = (listaVehiculos.sortBy(v => v.velmax.magnitud))
+  lista(0).velmax.magnitud
 }
 
 val promedioVelocidad = {
   var suma:Double = 0
-  listaVehiculos.foreach(v => suma = suma+v.vel.magnitud)
+  listaVehiculos.foreach(v => suma = suma+v.velmax.magnitud)
   suma/listaVehiculos.size
 }
 

@@ -8,7 +8,7 @@ import movimiento.Velocidad
 import org.jfree.util.ShapeUtilities
 
 import scala.util.Random
-class MotoTaxi (var placaMT:String,velocidad:Velocidad) extends Vehiculo(placaMT)(velocidad){
+class MotoTaxi (var placaMT:String,velocidad:Velocidad,aceleracion:Int) extends Vehiculo(placaMT)(velocidad,aceleracion){
   
   var placaGenerada:String = ""
   

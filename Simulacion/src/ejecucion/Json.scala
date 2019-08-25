@@ -23,10 +23,14 @@ object Json{
       ,camiones:Double,motoTaxis:Double)
       
   case class pametrosSemaforos(minTiempoVerde:Int,maxTiempoVerde:Int,tiempoAmarillo:Int)
+  
+  case class pametrosAceleracion(minimo:Int,maximo:Int)
+  
+  case class pametrosDistanciaSemaforos(XSemaforoFrenar:Int,XSemaforoAmarilloContinuar:Int)
       
   case class pametrosSimulacion(dt :Double,tRefresh:Double,vehiculos:pametrosVehiculos,
-      velocidad:pametrosVelocidad,proporciones:pametrosProporciones,semaforos:pametrosSemaforos)
-      
+      velocidad:pametrosVelocidad,proporciones:pametrosProporciones,semaforos:pametrosSemaforos,aceleracion:pametrosAceleracion,distanciasFrenadoVehiculos:pametrosDistanciaSemaforos)
+
   case class Datos(pametrosSimulacion:pametrosSimulacion) 
   
   //Ejecutar con cargarDatosJson(ruta+archivo)

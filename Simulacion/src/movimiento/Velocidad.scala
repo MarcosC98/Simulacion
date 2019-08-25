@@ -1,6 +1,6 @@
 package movimiento
 import plano.Angulo
-case class Velocidad(val magnitud:Int)(var direccion:Angulo) {
+case class Velocidad(var magnitud:Double)(var direccion:Angulo) {
 }
   object Velocidad{
     
