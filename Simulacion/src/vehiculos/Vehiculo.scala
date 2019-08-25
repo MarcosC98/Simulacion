@@ -49,7 +49,7 @@ abstract case class Vehiculo(var placa: String)(val velmax: Velocidad, val acele
       lugarSemaforo = siguienteSemaforo.lugar
       velmax.direccion.grados = angulo
       distanciaHastaSemaforo = math.abs(math.sqrt(math.pow((posicion.x - proximaInter.x), 2) + math.pow((posicion.y - proximaInter.y), 2)))
-      if ((siguienteSemaforo.estado == "Rojo" || siguienteSemaforo.estado == "Amarillo") && distanciaHastaSemaforo <= Simulacion.XSemaforoFrenar) {
+      if ( ((siguienteSemaforo.estado == "Rojo" || siguienteSemaforo.estado == "Amarillo")  || proximaInter == viaje.interF) && distanciaHastaSemaforo <= Simulacion.XSemaforoFrenar) {
         calcularFrenado //en la variable frenado se queda la aceleracion negativa necesaria para frenar al siguiente semaforo
         aceleracion = frenado
       }
