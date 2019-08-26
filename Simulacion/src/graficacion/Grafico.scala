@@ -12,6 +12,8 @@ import org.jfree.data.xy.XYSeriesCollection
 import org.jfree.chart.ChartFrame
 import org.jfree.chart.annotations.XYTextAnnotation
 import java.util.Random
+import ejecucion.ConexionNeo4J
+import ejecucion.Main
 
 import ejecucion.Simulacion
 import vehiculos.Vehiculo
@@ -49,10 +51,13 @@ object Grafico {
       val key: Int = keyEvent.getKeyCode
 
       if (key == KeyEvent.VK_F5) {
-        //Simulacion.encender
+        //Main.correr
       }
       else if (key == KeyEvent.VK_F6) {
         Simulacion.parar
+        ConexionNeo4J.cargarSemaforosNeo4j(Simulacion.listaSemaforos)
+        ConexionNeo4J.cargarVehiculos(Simulacion.listaVehiculos)
+        ConexionNeo4J.cargarComparendos(Simulacion.listaComparendos)
       }
 
     }

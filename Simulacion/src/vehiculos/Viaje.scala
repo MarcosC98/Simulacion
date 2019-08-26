@@ -9,13 +9,15 @@ class Viaje(v: Vehiculo) {
 
   val aleatorio = scala.util.Random
   val tamanioListaInter = Simulacion.listaIntersecciones.length
-  val interI = Simulacion.listaIntersecciones(aleatorio.nextInt(tamanioListaInter))
-  val interF = otraInter(interI)
+  var interI = Simulacion.listaIntersecciones(aleatorio.nextInt(tamanioListaInter))
+  var interF = otraInter(interI)
+  
+  
   
   val nodoi = GrafoVia.grafo.get(interI)
   val nodof = GrafoVia.grafo.get(interF)
   val recorrido = nodoi.shortestPathTo(nodof).get.edges.toList.map(_.toOuter.label.asInstanceOf[Via])
-  val pila = Queue(recorrido: _*)
+  var pila = Queue(recorrido: _*)
 
   
   
@@ -30,6 +32,15 @@ class Viaje(v: Vehiculo) {
       }
     }
     interF
+  }
+  
+  def setValoresViaje(inicio:Interseccion,fin:Interseccion){
+    interI = inicio
+    interF = fin
+    val nodoi = GrafoVia.grafo.get(interI)
+    val nodof = GrafoVia.grafo.get(interF)
+    val recorrido = nodoi.shortestPathTo(nodof).get.edges.toList.map(_.toOuter.label.asInstanceOf[Via])
+    pila = Queue(recorrido: _*)
   }
 
 }

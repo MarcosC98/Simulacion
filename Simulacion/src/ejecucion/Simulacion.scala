@@ -62,8 +62,11 @@ object Simulacion extends Runnable{
    if (terminar) c = false
  }
  
- promedioDestino = calcularPromedioVehiInter
- enviarDatosResultadosSimulacion
+ if(terminar == true){
+   promedioDestino = calcularPromedioVehiInter
+   enviarDatosResultadosSimulacion
+ }
+ 
 }
   
   def parar={
@@ -128,18 +131,18 @@ val promedioVelocidad = {
 }
 
 val distanciaMinima = {
-  val lista =listaVehiculos.sortBy(v => v.distanciaARecorrer)
-  lista(0).distanciaARecorrer
+  val lista =listaVehiculos.sortBy(v => v.distanciaRecorrida)
+  lista(1).distanciaRecorrida
 }
 
 val distanciaMaxima = {
-  val lista = listaVehiculos.sortBy(v => v.distanciaARecorrer)
-  lista(lista.size - 1).distanciaARecorrer
+  val lista = listaVehiculos.sortBy(v => v.distanciaRecorrida)
+  lista(lista.size - 1).distanciaRecorrida
 }
 
 val distanciaPromedio = {
   var suma:Double = 0
-  listaVehiculos.foreach(v => suma = suma + v.distanciaARecorrer)
+  listaVehiculos.foreach(v => suma = suma + v.distanciaRecorrida)
   suma/listaVehiculos.size
 }
 

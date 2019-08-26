@@ -30,22 +30,24 @@ abstract case class Vehiculo(var placa: String)(val velmax: Velocidad, val acele
   var angulo: Double = 0
   var frenado: Double = 0
   var atraviesaAmarillo: Boolean = false
-  val distanciaARecorrer = {
-    var suma: Double = 0
-    viaje.pila.foreach(v => suma = suma + v.distancia)
-    suma
-  }
   var tieneComparendoEnViaActual:Boolean = false
+  var distanciaRecorrida:Double = 0
   var distanciaHastaSemaforo: Double = 0
 
   Simulacion.listaVehiculos.append(this)
 
   def mover(dt: Double) {
     if (posicion.x == viaje.interF.x && posicion.y == viaje.interF.y) {
+      viaje.setValoresViaje(viaje.interI, viaje.interF)
+         distanciaRecorrida = {
+    var suma: Double = 0
+    viaje.pila.foreach(v => suma = suma + v.distancia)
+    suma
+  }
     } else if (siguienteSemaforo == null || siguienteSemaforo.estado == "Verde" || posicion != lugarSemaforo) {
       obtenerSiguientesDatos
       lugarSemaforo = siguienteSemaforo.lugar
-      velmax.direccion.grados = angulo
+      velActual.direccion.grados = angulo
       distanciaHastaSemaforo = math.abs(math.sqrt(math.pow((posicion.x - proximaInter.x), 2) + math.pow((posicion.y - proximaInter.y), 2)))
       if ( ((siguienteSemaforo.estado == "Rojo" || siguienteSemaforo.estado == "Amarillo")  || proximaInter == viaje.interF) && distanciaHastaSemaforo <= Simulacion.XSemaforoFrenar) {
         calcularFrenado //en la variable frenado se queda la aceleracion negativa necesaria para frenar al siguiente semaforo
