@@ -1,9 +1,11 @@
 package mapa
+import java.awt.Rectangle
+
 import ejecucion.Simulacion
 import plano.Punto
 
 class CamaraFotoDeteccion(_via :Via,_distanciaDeOrigen:Int) {
-  
+  val figura = new Rectangle(-8,-8,6,6)
   def via = _via
   def distanciaDeOrigen = _distanciaDeOrigen
   Simulacion.listaCamaras.append(this)

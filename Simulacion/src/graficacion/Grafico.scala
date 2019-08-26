@@ -3,7 +3,7 @@ import java.awt.event.{KeyEvent, KeyListener}
 import java.awt.{BasicStroke, Color}
 
 import javax.swing.JFrame
-import mapa.{Interseccion, Via}
+import mapa.{CamaraFotoDeteccion, Interseccion, Via}
 import org.jfree.chart.ChartFactory
 import org.jfree.chart.plot.PlotOrientation
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer
@@ -13,8 +13,7 @@ import org.jfree.chart.ChartFrame
 import org.jfree.chart.annotations.XYTextAnnotation
 import java.util.Random
 
-import ejecucion.{GrafoVia, Json, Main, Simulacion}
-
+import ejecucion.Simulacion
 import vehiculos.Vehiculo
 
 import scala.collection.mutable.ArrayBuffer
@@ -63,8 +62,9 @@ object Grafico {
     override def keyReleased(e: KeyEvent): Unit = {}
   })
 
-  def graficaViasNodos(vias: ArrayBuffer[Via], intersecciones: ArrayBuffer[Interseccion]) = {
+  def graficaViasNodos(vias: ArrayBuffer[Via], intersecciones: ArrayBuffer[Interseccion],camaras:ArrayBuffer[CamaraFotoDeteccion])= {
     var numAux: Int = 0
+
     vias.foreach({ x =>
       val via = new XYSeries(numAux)
       via.add(x.origen.x, x.origen.y)
@@ -73,12 +73,22 @@ object Grafico {
       render.setSeriesShapesVisible(numAux, false)
       numAux += 1
     })
+    camaras.foreach(camara => {
+      dataset.addSeries(new XYSeries((numAux)))
+      val graficoCamara = dataset.getSeries(numAux)
+      graficoCamara.add(camara.posicion.x, camara.posicion.y)
+      render.setSeriesShape(numAux, camara.figura)
+      render.setSeriesPaint(numAux, Color.decode("#0026ff"))
+      numAux +=1
+    })
     intersecciones.foreach({
       x =>
         val interseccion = new XYTextAnnotation(x.nombre.getOrElse(""), x.x, x.y)
         interseccion.setPaint(Color.decode(x.color))
         plantilla.addAnnotation(interseccion)
     })
+
+
   }
 
   def dibujarVehiculos(vehiculos: ArrayBuffer[Vehiculo]) = {
