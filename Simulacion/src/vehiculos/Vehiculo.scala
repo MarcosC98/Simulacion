@@ -21,7 +21,6 @@ abstract case class Vehiculo(var placa: String)(val velmax: Velocidad, val acele
   //aceleracion en m/s
   val figura: Shape
   val aleatorio = scala.util.Random
-  val tamanioInter = Simulacion.listaIntersecciones.size
   val viaje = new Viaje(this)
   var viaActual = viaje.pila.dequeue()
   var siguienteSemaforo: Semaforo = null
