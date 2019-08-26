@@ -1,6 +1,5 @@
 package vehiculos
 import java.awt.Shape
-
 import plano.Punto
 import mapa.Interseccion
 import movimiento.Movil
@@ -13,9 +12,9 @@ import ejecucion.Simulacion
 import plano.Angulo
 import ejecucion.GrafoVia
 import mapa.Via
-
 import scala.collection.mutable.Queue
 import movimiento.MovimientoAcelerado
+import mapa.Comparendo
 
 abstract case class Vehiculo(var placa: String)(val velmax: Velocidad, val aceleracionOriginal: Double)
   extends Movil(velmax, aceleracionOriginal) with MovimientoAcelerado {
@@ -23,7 +22,6 @@ abstract case class Vehiculo(var placa: String)(val velmax: Velocidad, val acele
   val figura: Shape
   val aleatorio = scala.util.Random
   val tamanioInter = Simulacion.listaIntersecciones.size
-
   val viaje = new Viaje(this)
   var viaActual = viaje.pila.dequeue()
   var siguienteSemaforo: Semaforo = null
@@ -38,6 +36,7 @@ abstract case class Vehiculo(var placa: String)(val velmax: Velocidad, val acele
     viaje.pila.foreach(v => suma = suma + v.distancia)
     suma
   }
+  var tieneComparendoEnViaActual:Boolean = false
   var distanciaHastaSemaforo: Double = 0
 
   Simulacion.listaVehiculos.append(this)
@@ -57,21 +56,39 @@ abstract case class Vehiculo(var placa: String)(val velmax: Velocidad, val acele
       if (siguienteSemaforo.estado == "Amarillo" && distanciaHastaSemaforo <= Simulacion.XAmarilloContinuar) {
         aceleracion = aceleracionO
       }
-      
+      if(viaActual.tieneCamara && !(tieneComparendoEnViaActual)){
+        revisarFotoMulta
+      }
       aumentarPosicion(dt)
-      if (velActual.magnitud != 0 && velActual.magnitud < 0.1) {
+      margenDeErrorAceleracion
+      revisarMargenDeError
+    }
+  }
+  
+  def revisarFotoMulta{
+    val camara = viaActual.camara
+    val distanciaHastaCamara = math.abs(math.sqrt(math.pow((camara.posicion.x - posicion.x), 2) + math.pow((camara.posicion.y - posicion.y), 2)))
+    if(distanciaHastaCamara <=Velocidad.kilometroHorMetroSeg(Simulacion.maxVelocidad) * Simulacion.dt){
+      if (velActual.magnitud > viaActual.velmax){
+        new Comparendo(this,velActual.magnitud,viaActual.velmax)
+        tieneComparendoEnViaActual = true
+      }
+    }
+  }
+  
+  
+  def calcularFrenado {
+    val tiempoHastaSemaforo = distanciaHastaSemaforo / Velocidad.kilometroHorMetroSeg(velActual.magnitud)
+    frenado = -Velocidad.kilometroHorMetroSeg(velActual.magnitud) / tiempoHastaSemaforo
+  }
+  
+  def margenDeErrorAceleracion{      
+    if (velActual.magnitud != 0 && velActual.magnitud < 0.1) {
         velActual.magnitud = 0
         aceleracion = aceleracionO
         posicion.x_(proximaInter.x)
         posicion.y_(proximaInter.y)
       }
-      revisarMargenDeError
-    }
-  }
-
-  def calcularFrenado {
-    val tiempoHastaSemaforo = distanciaHastaSemaforo / Velocidad.kilometroHorMetroSeg(velActual.magnitud)
-    frenado = -Velocidad.kilometroHorMetroSeg(velActual.magnitud) / tiempoHastaSemaforo
   }
 
   def obtenerSiguientesDatos {
@@ -99,6 +116,7 @@ abstract case class Vehiculo(var placa: String)(val velmax: Velocidad, val acele
         frenado = 0
         aceleracion = aceleracionO
         velActual.magnitud = 0
+        tieneComparendoEnViaActual = false
       }
 
     }

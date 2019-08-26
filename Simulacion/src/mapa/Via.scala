@@ -3,12 +3,13 @@ import plano.Recta
 import ejecucion.Simulacion
 import scala.collection.mutable.ArrayBuffer
 import plano.Angulo
-class Via(iorigen: Interseccion, ifinal: Interseccion, velmax: Int,
+class Via(iorigen: Interseccion, ifinal: Interseccion, _velmax: Int,
           tipoVia: TipoVia, _sentido: Sentido, numero: String, var nombreVia: Option[String]) extends Recta {
   Simulacion.listaVias.append(this)
   type T = Interseccion
   val origen = iorigen
   val fin = ifinal
+  val velmax = _velmax
   val semaforos = ArrayBuffer[Semaforo]()//El semaforo en 0 será el de fin, y el de 1 será el origen si es doble via
   def sentido = _sentido
   def distancia = Math.sqrt(Math.pow((fin.x - origen.x), 2) + Math.pow((fin.y - origen.y), 2))
@@ -19,4 +20,6 @@ class Via(iorigen: Interseccion, ifinal: Interseccion, velmax: Int,
   }else{
     semaforos.append(null)
   }
+  var tieneCamara:Boolean = false
+  var camara:CamaraFotoDeteccion = null
 }
