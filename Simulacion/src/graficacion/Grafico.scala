@@ -14,7 +14,7 @@ import org.jfree.chart.annotations.XYTextAnnotation
 import java.util.Random
 
 import ejecucion.{GrafoVia, Json, Main, Simulacion}
-import ejecucion.Simulacion.listaVehiculos
+
 import vehiculos.Vehiculo
 
 import scala.collection.mutable.ArrayBuffer
@@ -50,7 +50,7 @@ object Grafico {
       val key: Int = keyEvent.getKeyCode
 
       if (key == KeyEvent.VK_F5) {
-        Simulacion.run
+        Simulacion.encender
       }
       else if (key == KeyEvent.VK_F6) {
         Simulacion.parar

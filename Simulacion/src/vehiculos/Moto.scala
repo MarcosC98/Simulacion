@@ -1,13 +1,10 @@
 package vehiculos
 import java.awt.Shape
 
-import mapa.Interseccion
-import ejecucion.Simulacion
-import plano.Punto
+
 import movimiento.Velocidad
 import org.jfree.util.ShapeUtilities
 
-import scala.util.Random
 class Moto (var placaM:String,velocidad:Velocidad,aceleracion:Int) extends Vehiculo(placaM)(velocidad,aceleracion){
   
   val aleatorioM = scala.util.Random

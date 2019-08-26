@@ -1,6 +1,5 @@
 package ejecucion
 import org.neo4j.driver.v1._
-import scala.collection.mutable.ArrayBuffer
 import mapa.Interseccion
 import mapa._
 

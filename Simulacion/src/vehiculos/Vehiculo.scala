@@ -4,17 +4,11 @@ import java.awt.Shape
 import plano.Punto
 import mapa.Interseccion
 import movimiento.Movil
-import movimiento.MovimientoAcelerado
 import movimiento.Velocidad
 import mapa.Semaforo
-import mapa.NodoSemaforo
-import scala.util.Random
 import ejecucion.Simulacion
 import plano.Angulo
-import ejecucion.GrafoVia
-import mapa.Via
 
-import scala.collection.mutable.Queue
 import movimiento.MovimientoAcelerado
 
 abstract case class Vehiculo(var placa: String)(val velmax: Velocidad, val aceleracionOriginal: Double)

@@ -1,8 +1,6 @@
 package ejecucion
 import graficacion.Grafico
 import vehiculos.Viaje
-import mapa.Via
-import movimiento.Velocidad
 import vehiculos.Carro
 import vehiculos.Moto
 import vehiculos.Camion
@@ -10,16 +8,11 @@ import vehiculos.Bus
 import vehiculos.MotoTaxi
 import mapa.Interseccion
 import mapa.Via
-import mapa.TipoVia
-import mapa.Sentido
 import mapa.Semaforo
 import mapa.NodoSemaforo
-import plano.Angulo
-
 import scala.collection.mutable.ArrayBuffer
 //Singleton Object para que solo haya una instancia
 import vehiculos.Vehiculo
-import scala.util
 object Simulacion extends Runnable{
   
   val aleatorio = scala.util.Random
@@ -66,28 +59,22 @@ object Simulacion extends Runnable{
    t += dt
    Grafico.graficarVehiculos(listaVehiculos)
    Thread.sleep(msEspera)
-   if (terminar) c = false
+   //if (terminar) c = false
  }
  
  promedioDestino = calcularPromedioVehiInter
  enviarDatosResultadosSimulacion
 }
-  
-//  def run{
-//  var vehiculoAleatorio = listaVehiculos(0)
-//  println("VA A : " + vehiculoAleatorio.viaje.interF.nombre)
-//  while(c){
-//    Nodo.controlarFlujoSemaforos
-//    vehiculoAleatorio.mover(dt)
-//    t+= dt
-//    Grafico.graficarVehiculos(listaVehiculos)
-//    Thread.sleep(msEspera)
-//  }
-//  }
-  
-  
   def parar={
+    println(c)
     c=false
+    println(c)
+  }
+  def encender: Unit ={
+    println(c)
+    c=true
+    run()
+    println(c)
   }
  
 

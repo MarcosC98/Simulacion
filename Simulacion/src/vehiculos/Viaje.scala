@@ -1,5 +1,4 @@
 package vehiculos
-import scala.util.Random
 import ejecucion.Simulacion
 import mapa.Interseccion
 import mapa.Via
