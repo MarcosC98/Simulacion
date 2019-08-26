@@ -6,10 +6,10 @@ class Interseccion(cx:Int ,cy:Int,val _nombre:Option[String]) extends Punto(cx,c
 
   def nombre  = _nombre
   val color = "#%06x".format(rand.nextInt(256*256*256))
-  Simulacion.listaIntersecciones.append(this)
   
   var _vehiculosEnInter:Int = 0
   
   def vehiculosEnInter = _vehiculosEnInter
   def vehiculosEnInter_(vehiculosEnInter:Int):Unit = _vehiculosEnInter = vehiculosEnInter
+  Simulacion.listaIntersecciones.append(this)
 }
