@@ -23,7 +23,7 @@ object Json{
       
   case class pametrosSemaforos(minTiempoVerde:Int,maxTiempoVerde:Int,tiempoAmarillo:Int)
   
-  case class pametrosAceleracion(minimo:Int,maximo:Int)
+  case class pametrosAceleracion(minimo:Double,maximo:Double)
   
   case class pametrosDistanciaSemaforos(XSemaforoFrenar:Int,XSemaforoAmarilloContinuar:Int)
       

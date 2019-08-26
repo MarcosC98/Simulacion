@@ -5,7 +5,7 @@ import java.awt.Shape
 import movimiento.Velocidad
 import org.jfree.util.ShapeUtilities
 
-class Bus (var placaB:String,velocidad:Velocidad,aceleracion:Int) extends Vehiculo(placaB)(velocidad,aceleracion){
+class Bus (var placaB:String,velocidad:Velocidad,aceleracion:Double) extends Vehiculo(placaB)(velocidad,aceleracion){
   
   val aleatorioC = scala.util.Random
   var placaGenerada:String = ""

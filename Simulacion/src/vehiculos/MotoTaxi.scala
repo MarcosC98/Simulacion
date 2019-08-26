@@ -6,7 +6,7 @@ import movimiento.Velocidad
 import org.jfree.util.ShapeUtilities
 
 
-class MotoTaxi (var placaMT:String,velocidad:Velocidad,aceleracion:Int) extends Vehiculo(placaMT)(velocidad,aceleracion){
+class MotoTaxi (var placaMT:String,velocidad:Velocidad,aceleracion:Double) extends Vehiculo(placaMT)(velocidad,aceleracion){
   
   var placaGenerada:String = ""
   

@@ -1,8 +1,8 @@
 {
 
 "pametrosSimulacion":{
-	"dt": 0.4,
-	"tRefresh": 0.005,
+	"dt": 1,
+	"tRefresh": 0.025,
 	"vehiculos": {
 		"minimo": 50,
 		"maximo": 100
@@ -21,15 +21,15 @@
 	"semaforos":{
 		"minTiempoVerde":20,
 		"maxTiempoVerde":40,
-		"tiempoAmarillo":3
+		"tiempoAmarillo":10
 	},
 	"aceleracion":{
-		"minimo" : 1,
-		"maximo" : 2
+		"minimo" : 0.5,
+		"maximo" : 1
 	},
 	"distanciasFrenadoVehiculos":{
 	"XSemaforoFrenar": 200,
-	"XSemaforoAmarilloContinuar" : 20
+	"XSemaforoAmarilloContinuar" : 100
 	}
 }
 

@@ -55,6 +55,7 @@ abstract case class Vehiculo(var placa: String)(val velmax: Velocidad, val acele
 
       if (siguienteSemaforo.estado == "Amarillo" && distanciaHastaSemaforo <= Simulacion.XAmarilloContinuar) {
         aceleracion = aceleracionO
+
       }
       if(viaActual.tieneCamara && !(tieneComparendoEnViaActual)){
         revisarFotoMulta
@@ -115,7 +116,7 @@ abstract case class Vehiculo(var placa: String)(val velmax: Velocidad, val acele
         viaActual = viaje.pila.dequeue()
         frenado = 0
         aceleracion = aceleracionO
-        velActual.magnitud = 0
+        if(siguienteSemaforo.estado == "Rojo")velActual.magnitud = 0
         tieneComparendoEnViaActual = false
       }
 
@@ -131,7 +132,7 @@ object Vehiculo {
     val numeroAleatorio = aleatorio.nextInt(5)
     val magAleatoria = Simulacion.minVelocidad + aleatorio.nextInt(Simulacion.maxVelocidad - Simulacion.minVelocidad)
     val anguloAleatorio = aleatorio.nextInt(360)
-    val aceleracion = Simulacion.minAce + aleatorio.nextInt(Simulacion.maxAce - Simulacion.minAce)
+    val aceleracion = Simulacion.minAce + aleatorio.nextInt((Simulacion.maxAce - Simulacion.minAce).round.toInt) + aleatorio.nextInt(100)/100 
 
     if (numeroAleatorio == 0) {
       val instancia = new Carro("", new Velocidad(magAleatoria)(new Angulo(anguloAleatorio)), aceleracion)
