@@ -1,7 +1,6 @@
 package mapa
 import ejecucion.Simulacion
 import plano.Punto
-import scala.util.Random
 class Semaforo(_lugar:Punto) {
   
   val lugar = _lugar

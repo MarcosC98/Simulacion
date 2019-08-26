@@ -1,6 +1,5 @@
 package mapa
 import scala.collection.mutable.ArrayBuffer
-import plano.Punto
 import ejecucion.Simulacion
 
 class NodoSemaforo {
