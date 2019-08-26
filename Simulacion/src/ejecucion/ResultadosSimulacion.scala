@@ -6,5 +6,6 @@ case class MallaVial (vias: Int, intersecciones:Int, viasUnSentido: Int, viasDob
 case class Tiempo (simulacion: Double, realidad: Double)
 case class VelocidadResultados (minima: Double, maxima: Double, prodemio: Double)
 case class Distancia (minima: Double, maxima: Double, promedio: Double)
-case class Resultados (vehiculos: Vehiculos, mallaVial: MallaVial,tiempos: Tiempo, velocidades: VelocidadResultados, distancias: Distancia)
+case class Comparendos(cantidad:Int,promedioPorcentajeExceso:Double)
+case class Resultados (vehiculos: Vehiculos, mallaVial: MallaVial,tiempos: Tiempo, velocidades: VelocidadResultados, distancias: Distancia,comparendos:Comparendos)
 case class ResultadosSimulacion(resultados: Resultados) 

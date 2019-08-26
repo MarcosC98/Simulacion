@@ -4,5 +4,5 @@ import vehiculos.Vehiculo
 import ejecucion.Simulacion
 class Comparendo (vehiculo:Vehiculo,velocidad:Double,velocidadMaxima:Double){
   Simulacion.listaComparendos.append(this)
-  println("COMPARENDO")
+  val exceso = (velocidad-velocidadMaxima)*100/velocidadMaxima
 }

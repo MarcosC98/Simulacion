@@ -143,6 +143,15 @@ val distanciaPromedio = {
   suma/listaVehiculos.size
 }
 
+val promedioComparendos = {
+  var sumaExcesos:Double = 0
+  listaComparendos.foreach(c => {
+    sumaExcesos = sumaExcesos + c.exceso
+  })
+  val promedio = sumaExcesos/listaComparendos.size - 1
+  promedio
+}
+
 
   val vehiculos = Vehiculos(numeroVehiculos,Simulacion.carros.toInt,
       Simulacion.motos.toInt,Simulacion.buses.toInt,
@@ -157,8 +166,8 @@ val distanciaPromedio = {
   val tiempo = Tiempo(Simulacion.t,Simulacion.t * tRefresh * 1/100)
   val velocidad = VelocidadResultados(minVelocidad,maxVelocidad,promedioVelocidad)
   val distancia = Distancia(distanciaMinima,distanciaMaxima,distanciaPromedio)
-
-  val resultados =  Resultados(vehiculos,mallaVial,tiempo,velocidad,distancia)
+  val comparendos = Comparendos(listaComparendos.size,promedioComparendos)
+  val resultados =  Resultados(vehiculos,mallaVial,tiempo,velocidad,distancia,comparendos)
   val resultadosSimulacion = ResultadosSimulacion(resultados)
   Json.escribirArchivo(resultadosSimulacion)
 }
