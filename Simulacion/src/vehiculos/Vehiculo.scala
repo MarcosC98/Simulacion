@@ -123,6 +123,15 @@ abstract case class Vehiculo(var placa: String)(val velmax: Velocidad, val acele
 
     }
   }
+  
+  def revisarSemaforo{
+    if(proximaInter == viaActual.origen){
+      siguienteSemaforo =  viaActual.semaforos(1)
+    }
+    if(proximaInter == viaActual.fin){
+      siguienteSemaforo = viaActual.semaforos(0)
+    }
+  }
 
 }
 

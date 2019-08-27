@@ -4,6 +4,7 @@ import mapa.Interseccion
 import mapa._
 import scala.collection.mutable.ArrayBuffer
 import vehiculos._
+import plano.Punto
 object ConexionNeo4J {
   val url = "bolt://localhost:7687"
   val user = "neo4j"
@@ -107,6 +108,7 @@ object ConexionNeo4J {
 
   def cargarComparendos(comparendos: ArrayBuffer[Comparendo]) {
     borrarComparendos
+    println("Guardando comparendos actuales...")
     val (driver, session) = getSession()
     comparendos.foreach(c => {
       val script = s"CREATE (c:Comparendo{ placa:'${c.vehiculo.placa}', velocidad:${c.velocidad}, velocidadMaxima:${c.velocidadMaxima}})"
@@ -114,6 +116,7 @@ object ConexionNeo4J {
     })
     session.close()
     driver.close()
+    println("Se han guardado los comparendos actuales")
   }
   
   def revisarTipoVehiculo(vehiculo:Vehiculo):String = {
@@ -164,6 +167,51 @@ object ConexionNeo4J {
   driver.close()
   println("Se cargó la información de los vehiculos!")
   }
+  
+  def descargarSemaforos{
+    println("Se cargan semaforos de neo4j...")
+    val (driver,session) = getSession()
+    val script = s"MATCH (s:Semaforo) RETURN s"
+    val resultado = session.run(script)
+    while(resultado.hasNext()){
+      val fila = resultado.next()
+      val datosSemaforo = fila.values().get(0)
+      val x = datosSemaforo.get("x").asDouble()
+      val y = datosSemaforo.get("y").asDouble()
+      val semaforo = new Semaforo(new Punto(x,y))
+      semaforo.estado = datosSemaforo.get("estado").asString()
+      semaforo.tVerde = datosSemaforo.get("tVerdeA").asDouble()
+      semaforo.tVerdeOriginal = datosSemaforo.get("tVerdeO").asInt()
+      semaforo.tAmarillo = datosSemaforo.get("tAmarilloA").asDouble()
+      semaforo.tAmarilloOriginal = datosSemaforo.get("tAmarilloO").asInt()
+    }
+  }
+  
+  def buscarVehiculo(placa:String):Vehiculo = {
+    var vehiculo:Vehiculo = null
+    Simulacion.listaVehiculos.foreach(v=> {
+      if (v.placa == placa){
+        vehiculo = v
+      }
+    })
+    vehiculo
+  }
+  
+  def descargarComparendos{
+    println("Se cargan comparendos de neo4j...")
+    val(driver,session) = getSession()
+    val script = s"MATCH(c:Comparendo)RETURN C"
+    val resultado = session.run(script)
+    while(resultado.hasNext()){
+      val fila = resultado.next()
+      val datosComparendo = fila.values.get(0)
+      val placa = datosComparendo.get("placa").asString()
+      val vehiculo = buscarVehiculo(placa)
+      val velocidad = datosComparendo.get("velocidad").asDouble()
+      val velocidadMaxima = datosComparendo.get("velocidadMaxima").asDouble()
+      new Comparendo (vehiculo,velocidad,velocidadMaxima)
+    }
+  }  
 }
 
 

@@ -37,7 +37,6 @@ object Simulacion extends Runnable{
   val mototaxis = scala.math.round(Json.datos.pametrosSimulacion.proporciones.motoTaxis * numeroVehiculos)
   val camiones = scala.math.round(Json.datos.pametrosSimulacion.proporciones.camiones * numeroVehiculos)
   val Nodo = new NodoSemaforo
-  
   var t: Double =0
   
 
@@ -51,9 +50,7 @@ object Simulacion extends Runnable{
 
   var c:Boolean = true
  def run() {
-
  while (c) {
-   
    Nodo.controlarFlujoSemaforos
    listaVehiculos.foreach(_.mover(dt))
    t += dt
@@ -71,6 +68,11 @@ object Simulacion extends Runnable{
   
   def parar={
     c=false
+  }
+  
+  def iniciar = {
+    c = true
+    run
   }
  
 
@@ -173,6 +175,8 @@ val promedioComparendos = {
   val resultados =  Resultados(vehiculos,mallaVial,tiempo,velocidad,distancia,comparendos)
   val resultadosSimulacion = ResultadosSimulacion(resultados)
   Json.escribirArchivo(resultadosSimulacion)
+  println("PROGRAMA FINALIZA")
+  System.exit(1)
 }
 
 

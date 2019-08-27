@@ -2,7 +2,7 @@ package mapa
 import plano.Punto
 import ejecucion.Simulacion
 import graficacion.Grafico.rand
-class Interseccion(cx:Int ,cy:Int,val _nombre:Option[String]) extends Punto(cx,cy) {
+class Interseccion(cx:Double ,cy:Double,val _nombre:Option[String]) extends Punto(cx,cy) {
 
   def nombre  = _nombre
   val color = "#%06x".format(rand.nextInt(256*256*256))

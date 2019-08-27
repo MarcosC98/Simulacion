@@ -51,13 +51,23 @@ object Grafico {
       val key: Int = keyEvent.getKeyCode
 
       if (key == KeyEvent.VK_F5) {
-        //Main.correr
+        Simulacion.parar
+        //carga datos de neo4j
+        Simulacion.listaSemaforos.clear()
+        println(Simulacion.listaSemaforos)
+        //Simulacion.listaComparendos.clear()
+        //Simulacion.listaVehiculos.clear()
+        ConexionNeo4J.descargarSemaforos
+        Simulacion.listaVehiculos.foreach(v=>v.revisarSemaforo)
+        Simulacion.iniciar
       }
-      else if (key == KeyEvent.VK_F6) {
+      else if (key == KeyEvent.VK_F2) {
         Simulacion.parar
         ConexionNeo4J.cargarSemaforosNeo4j(Simulacion.listaSemaforos)
         ConexionNeo4J.cargarVehiculos(Simulacion.listaVehiculos)
         ConexionNeo4J.cargarComparendos(Simulacion.listaComparendos)
+        println("PROGRAMA FINALIZA")
+        System.exit(0)
       }
 
     }
